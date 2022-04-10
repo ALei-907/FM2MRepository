@@ -24,4 +24,14 @@ public class RandomUtil {
         int chooseIndex = ThreadLocalRandom.current().nextInt(size);
         return usableIndex.get(chooseIndex);
     }
+
+    /**
+     * 获取随机List下标
+     * @param listSize
+     * @return
+     */
+    public static int getRandomIndexByList(Integer listSize) {
+        assert listSize > 0;
+        return ThreadLocalRandom.current().nextInt(listSize);
+    }
 }
