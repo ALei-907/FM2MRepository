@@ -1,4 +1,4 @@
-package com.alei.S008_AutoCloseable;
+package com.alei.S008_autocloseable;
 
 /**
  * @Author LeiLiMin
