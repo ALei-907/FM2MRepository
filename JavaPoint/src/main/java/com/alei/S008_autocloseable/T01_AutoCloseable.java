@@ -15,15 +15,13 @@ public class T01_AutoCloseable {
          */
         // try块退出时，会自动调用res.close()方法，关闭资源。
         try (TestA testA = new TestA()) {
-        } catch (Exception e) {
-            System.out.println("has error");
         }
     }
 }
 
 class TestA implements AutoCloseable {
     @Override
-    public void close() throws Exception {
+    public void close() {
         System.out.println("Resource Close");
     }
 }
