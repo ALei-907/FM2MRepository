@@ -1,7 +1,10 @@
 package com.alei.generateid.program;
 
+import com.alei.io.FileReadUtil;
 import com.alei.random.RandomUtil;
+import com.alei.redisclient.RedisClient;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -85,18 +88,23 @@ public class GenerateId {
         }
     }
 
-    public static void main(String[] args) {
-        GenerateId generateId = new GenerateId(100, 100);
-        Set<Integer> set = new HashSet<>();
-        while (true) {
-            try {
-                Integer id = generateId.getId();
+    public static void main(String[] args) throws IOException {
+        // GenerateId generateId = new GenerateId(100, 100);
+        // Set<Integer> set = new HashSet<>();
+        // while (true) {
+        //     try {
+        //         Integer id = generateId.getId();
+        //         set.add(id);
+        //     } catch (Exception e) {
+        //         System.out.println(1);
+        //     }
+        //
+        // }
 
-                set.add(id);
-            } catch (Exception e) {
-                System.out.println(1);
-            }
-
-        }
+        // Lua脚本测试
+        RedisClient redisClient = new RedisClient();
+        String fileContent = FileReadUtil.readFileToString("/Users/leilimin/IDEA-MySpace/FM2MRepository/JavaUtils/src/main/java/com/alei/generateid/redis/GenerateId.lua");
+        String Id = redisClient.evalNothing(fileContent);
+        System.out.println(Id);
     }
 }
