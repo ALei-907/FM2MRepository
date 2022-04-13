@@ -61,6 +61,12 @@ echo \
  
  # 验证是否安装完成
  sudo docker run hello-world
+ 
+ # 或者
+ # 启动Docker ：
+ systemctl start docker
+ # 是否启动成功：启动失败会显示Error
+  docker version
 
 ```
 
