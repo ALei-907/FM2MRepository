@@ -61,6 +61,10 @@
   * 使用了这个命令，docker会通过docker-proxy对宿主机的8000端口进行监听
 * docker run -d
   * 后台运行镜像
+* docker run --name example image_name
+  * 给容器起名字
+* docker run --name container_name -v 宿主机路径:容器内挂载路径 image_name
+  * 容器间共享文件-本质是交给宿主机来管理
 
 ```
 端口映射
