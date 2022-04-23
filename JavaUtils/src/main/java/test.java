@@ -1,4 +1,6 @@
+import javax.sound.midi.Soundbank;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +34,14 @@ public class test {
             System.out.println(integerIntegerEntry.getKey());
         }
 
+        /**
+         * DecimalFormat的作用，不实用的情况下仍然会存在丢死精度的问题
+         */
+        DecimalFormat format=new DecimalFormat("0.00000");
+        BigDecimal d1=new BigDecimal(0.001F);
+        System.out.println(d1.doubleValue());
+        BigDecimal d2=new BigDecimal(format.format(0.001F));
+        System.out.println(d2.doubleValue());
 
 
     }
