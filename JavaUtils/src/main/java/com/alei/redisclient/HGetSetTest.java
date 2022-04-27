@@ -15,9 +15,11 @@ public class HGetSetTest {
     public static void main(String[] args) throws IOException {
         RedisClient redisClient = new RedisClient();
         ArrayList<String> key = new ArrayList<>();
-        key.add("alei");
+        key.add("Key");
         ArrayList<String> arg = new ArrayList<>();
-        arg.add("name");
+        arg.add("getAttr");
+        arg.add("setValue");
+
         String s = FileReadUtil.readFileToString("/Users/leilimin/IDEA-MySpace/FM2MRepository/JavaUtils/src/main/java/com/alei/redisclient/HgetSet.lua");
         redisClient.evalArgs(s,key,arg);
     }
