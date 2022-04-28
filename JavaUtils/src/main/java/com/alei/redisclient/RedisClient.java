@@ -13,11 +13,11 @@ import java.util.Map;
  * @date: 2022/4/12
  */
 public class RedisClient {
-    private String hostKey = "redisHost";
+    private static final String hostKey = "redisHost";
 
-    private String portKey = "redisPort";
+    private static final String portKey = "redisPort";
 
-    private String authKey = "redisAuth";
+    private static final String authKey = "redisAuth";
 
     /**
      * 资源文件路径
@@ -28,19 +28,12 @@ public class RedisClient {
     private Jedis jedisClient;
 
     public RedisClient() {
-        if (jedisClient == null) {
-            synchronized (this) {
-                if (jedisClient == null) {
-                    Map<String, String> clientInfo = null;
-                    try {
-                        clientInfo = FileReadUtil.convertToMapByPp(sourcePath);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    jedisClient = new Jedis(clientInfo.get(hostKey), Integer.parseInt(clientInfo.get(portKey)));
-                    jedisClient.auth(clientInfo.get(authKey));
-                }
-            }
+        try {
+            Map<String, String> clientInfo = FileReadUtil.convertToMapByPp(this.sourcePath);
+            this.jedisClient = new Jedis(clientInfo.get(this.hostKey), Integer.parseInt(clientInfo.get(this.portKey)));
+            this.jedisClient.auth(clientInfo.get(this.authKey));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -48,8 +41,7 @@ public class RedisClient {
      * HGetSet: 让Hash的存取行为分布式安全
      */
     public Object hGetSet(List<String> keys, List<String> args) {
-        Object eval = jedisClient.eval(LuaConstant.H_GET_SET, keys, args);
-        return eval;
+        return jedisClient.eval(LuaConstant.H_GET_SET, keys, args);
     }
 
 

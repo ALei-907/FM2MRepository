@@ -16,6 +16,6 @@ public class RedisClientTest {
         ArrayList<String> arg = new ArrayList<>();
         arg.add("getAttr");
         arg.add("setValue");
-        redisClient.hGetSet(key,arg);
+        System.out.println(redisClient.hGetSet(key, arg));
     }
 }
