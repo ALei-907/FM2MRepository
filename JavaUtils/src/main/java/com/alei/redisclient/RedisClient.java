@@ -27,11 +27,16 @@ public class RedisClient {
 
     private Jedis jedisClient;
 
-    public RedisClient() throws IOException {
+    public RedisClient() {
         if (jedisClient == null) {
             synchronized (this) {
                 if (jedisClient == null) {
-                    Map<String, String> clientInfo = FileReadUtil.convertToMapByPp(sourcePath);
+                    Map<String, String> clientInfo = null;
+                    try {
+                        clientInfo = FileReadUtil.convertToMapByPp(sourcePath);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     jedisClient = new Jedis(clientInfo.get(hostKey), Integer.parseInt(clientInfo.get(portKey)));
                     jedisClient.auth(clientInfo.get(authKey));
                 }
@@ -40,28 +45,39 @@ public class RedisClient {
     }
 
     /**
-     * 没有任何参数的Lua脚本
-     *
-     * @param script: Lua脚本
+     * HGetSet: 让Hash的存取行为分布式安全
      */
-    public String evalNothing(String script) {
-        Object eval = jedisClient.eval(script);
-        return eval.toString();
+    public Object hGetSet(List<String> keys, List<String> args) {
+        Object eval = jedisClient.eval(LuaConstant.H_GET_SET, keys, args);
+        return eval;
     }
 
-    /**
-     * 没有任何参数的Lua脚本
-     *
-     * @param script: Lua脚本
-     */
-    public String evalNoArgs(String script, List<String> keys) {
-        String[] keysArr = keys.toArray(new String[keys.size()]);
-        Object eval = jedisClient.eval(script, keysArr.length, keysArr);
-        return eval.toString();
-    }
 
-    public String evalArgs(String script, List<String> keys, List<String> args) {
-        Object eval = jedisClient.eval(script, keys, args);
-        return String.valueOf(eval);
-    }
+    // /**
+    //  * 没有任何参数的Lua脚本
+    //  *
+    //  * @param script: Lua脚本
+    //  */
+    // public String evalNothing(String script) {
+    //     Object eval = jedisClient.eval(script);
+    //     return eval.toString();
+    // }
+
+    // /**
+    //  * 没有任何参数的Lua脚本
+    //  *
+    //  * @param script: Lua脚本
+    //  */
+    // public String evalNoArgs(String script, List<String> keys) {
+    //     String[] keysArr = keys.toArray(new String[keys.size()]);
+    //     Object eval = jedisClient.eval(script, keysArr.length, keysArr);
+    //     return eval.toString();
+    // }
+    //
+    // public String evalArgs(String script, List<String> keys, List<String> args) {
+    //     Object eval = jedisClient.eval(script, keys, args);
+    //     return String.valueOf(eval);
+    // }
+
+
 }
