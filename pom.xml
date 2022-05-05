@@ -11,6 +11,7 @@
     <modules>
         <module>JavaPoint</module>
         <module>JavaUtils</module>
+        <module>JUC</module>
     </modules>
 
     <properties>
