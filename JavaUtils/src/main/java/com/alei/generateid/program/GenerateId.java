@@ -104,7 +104,7 @@ public class GenerateId {
         // Lua脚本测试
         RedisClient redisClient = new RedisClient();
         String fileContent = FileReadUtil.readFileToString("/Users/leilimin/IDEA-MySpace/FM2MRepository/JavaUtils/src/main/java/com/alei/generateid/redis/GenerateId.lua");
-        String Id = redisClient.evalNothing(fileContent);
-        System.out.println(Id);
+        // String Id = redisClient.evalNothing(fileContent);
+        // System.out.println(Id);
     }
 }
