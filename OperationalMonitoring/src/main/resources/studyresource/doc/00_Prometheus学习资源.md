@@ -1,6 +1,6 @@
 ## Prometheus学习资源
 
-![prometheusMain](../image/prometheusMain.jpeg)
+![prometheusMain](../image/Architecture.jpeg)
 
 * 入门：https://zhuanlan.zhihu.com/p/267966193
 
