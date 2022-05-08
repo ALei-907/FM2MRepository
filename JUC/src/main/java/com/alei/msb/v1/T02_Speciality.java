@@ -28,4 +28,26 @@ public class T02_Speciality {
         interruptFlag = true;
     }
 
+    public static class A {
+        public boolean running = false;
+    }
+
+    public static volatile A a = new A();
+
+    /**
+     * 修改a.running并不会让其他线程可见
+     * 因为volatile修饰的是a,而不是a.running
+     */
+    public static void visibility1() throws InterruptedException {
+        Thread t1 = new Thread(() -> {
+            while (!a.running) {
+
+            }
+            System.out.println("T1 over");
+        });
+        t1.start();
+        Thread.sleep(1000);
+        a.running = true;
+    }
+
 }
