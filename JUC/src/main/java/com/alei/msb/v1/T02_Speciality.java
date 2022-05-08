@@ -1,5 +1,7 @@
 package com.alei.msb.v1;
 
+import jdk.jfr.ContentType;
+
 /**
  * @Author LeiLiMin
  * @Description: 线程的三大特性
@@ -49,5 +51,12 @@ public class T02_Speciality {
         Thread.sleep(1000);
         a.running = true;
     }
+    /**
+     * 1.缓存行：64Byte
+     * 2.缓存一致性：通过缓存一致性怎么提高效率，填充cacheLine,为的是减少保证缓存一致性而导致的额外开销(通知与同步)
+     * 3.缓存一致性协议：MESI
+     *
+     * JDK1.8: @Contended注解,让修饰的数据独占一个cacheLine
+     */
 
 }
