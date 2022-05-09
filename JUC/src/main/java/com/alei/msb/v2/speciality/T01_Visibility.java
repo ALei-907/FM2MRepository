@@ -1,13 +1,14 @@
-package com.alei.msb.v1;
-
-import jdk.jfr.ContentType;
+package com.alei.msb.v2.speciality;
 
 /**
  * @Author LeiLiMin
  * @Description: 线程的三大特性
  * @date: 2022/5/8
  */
-public class T02_Speciality {
+public class T01_Visibility {
+    // 1.主存内的数据变化，未必会及时反馈到线程副本内
+    // 2.volatile并不难保证让引用类型的字段也具备可见性
+    // 3.cacheLine的出现是为了提高效率(空间局部性原理)
     public static void main(String[] args) throws InterruptedException {
         visibility();
     }

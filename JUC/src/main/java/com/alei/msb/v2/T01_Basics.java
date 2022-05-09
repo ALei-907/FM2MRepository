@@ -1,4 +1,4 @@
-package com.alei.msb.v1;
+package com.alei.msb.v2;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
