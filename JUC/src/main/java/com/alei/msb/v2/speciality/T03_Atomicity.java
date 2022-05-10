@@ -17,6 +17,8 @@ public class T03_Atomicity {
     /**
      * 非原子性实验
      * 核心：num++ -> 取值,++,存值
+     *
+     * 原子类进行CAS操作时本质上还是加锁了，所执行的汇编指令还是加了Lock指令(多核情况下)
      */
     public static long num = 0;
 
