@@ -12,6 +12,7 @@
         <module>JavaPoint</module>
         <module>JavaUtils</module>
         <module>JUC</module>
+        <module>HFDesignPatterns</module>
     </modules>
 
     <properties>
