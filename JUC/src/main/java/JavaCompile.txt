@@ -1,5 +1,0 @@
-精疲力劲-记录一下进度
-
-1.get JdkResource
-2.进入主目录：bash ./configure
-3.make all
