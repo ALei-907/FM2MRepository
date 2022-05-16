@@ -1,1 +1,58 @@
-<mxfile host="app.diagrams.net" modified="2022-05-15T14:32:03.501Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36" version="18.0.4" etag="iRBn4a6VjMcy8x6Tn2ub" type="github"><diagram id="mjWNPQMZ38kRxQa0yu5l">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2022-05-15T15:30:15.552Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36" etag="7_MlYc5TW3Cp5TFF2jiC" version="18.0.4" type="github">
+  <diagram id="mjWNPQMZ38kRxQa0yu5l" name="Page-1">
+    <mxGraphModel dx="590" dy="393" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="YZkpgzFU-N8I7b1r3niC-1" value="" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="230" y="160" width="456" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="YZkpgzFU-N8I7b1r3niC-2" value="线程池" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="230" y="120" width="456" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="YZkpgzFU-N8I7b1r3niC-4" value="任务队列" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="380" y="180" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YZkpgzFU-N8I7b1r3niC-5" value="线程容器" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="250" y="250" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YZkpgzFU-N8I7b1r3niC-6" value="创建线程的工厂" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="380" y="250" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YZkpgzFU-N8I7b1r3niC-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="YZkpgzFU-N8I7b1r3niC-7" target="YZkpgzFU-N8I7b1r3niC-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="YZkpgzFU-N8I7b1r3niC-7" value="Task" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="225" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YZkpgzFU-N8I7b1r3niC-9" value="核心线程数：占用资源" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="520" y="250" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="YZkpgzFU-N8I7b1r3niC-10" value="最大线程数：闲置时可以归还资源" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="520" y="280" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="YZkpgzFU-N8I7b1r3niC-11" value="coreThreadPoolSize" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="230" y="370" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="YZkpgzFU-N8I7b1r3niC-12" value="maxThreadPoolSize" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="370" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="YZkpgzFU-N8I7b1r3niC-14" value="KeepalievTime" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="230" y="430" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="YZkpgzFU-N8I7b1r3niC-15" value="TimeUnit" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="430" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="YZkpgzFU-N8I7b1r3niC-16" value="ThreadFactory" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="490" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="YZkpgzFU-N8I7b1r3niC-17" value="Strategy" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="230" y="550" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="YZkpgzFU-N8I7b1r3niC-18" value="WorkQueue" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="230" y="490" width="120" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
