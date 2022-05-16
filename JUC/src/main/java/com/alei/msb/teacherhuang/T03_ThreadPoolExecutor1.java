@@ -7,7 +7,10 @@ import java.util.concurrent.*;
  * @Description:
  * @date: 2022/5/15
  */
-public class T03_ThreadPoolExecutor {
+public class T03_ThreadPoolExecutor1 {
+    // 1.线程池七大参数
+    // 2.四大拒绝策略
+    // 3.{@link threadPoolExecutor.ctl} 状态位设置
     public static void main(String[] args) {
         int cps = 1;
         int mps = 2;

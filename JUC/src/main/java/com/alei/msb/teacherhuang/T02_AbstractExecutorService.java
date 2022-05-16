@@ -9,10 +9,10 @@ import java.util.concurrent.*;
  * @date: 2022/5/15
  */
 public class T02_AbstractExecutorService {
-    // Executor -> ExecutorService -> AbstractExecutorService
-    // #newTaskFor()
-    // #doInvokeXX()
-    // #cancelAll()
+    // 1.Executor -> ExecutorService -> AbstractExecutorService
+    // 2.#newTaskFor()
+    // 3.#doInvokeXX() -> ecs -> queue.poll()
+    // 4.#cancelAll()
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         ExecutorService executor = Executors.newFixedThreadPool(10);
         ArrayList<Callable<Integer>> callables = new ArrayList<>();
