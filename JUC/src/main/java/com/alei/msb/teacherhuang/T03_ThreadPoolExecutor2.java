@@ -1,5 +1,8 @@
 package com.alei.msb.teacherhuang;
 
+import sun.misc.Unsafe;
+
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
@@ -29,6 +32,11 @@ public class T03_ThreadPoolExecutor2 {
         executorService02.execute(()->{System.out.println("Hello World!");});
         executorService02.shutdown();
         executorService02.awaitTermination(1,TimeUnit.SECONDS);
+
+        // Unsafe
+        Field theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
+        Object o = theUnsafe.get(null);
+
     }
 
     static List<String> getUserIdList() throws InterruptedException {
