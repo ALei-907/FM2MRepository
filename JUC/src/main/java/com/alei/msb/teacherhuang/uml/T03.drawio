@@ -1,11 +1,11 @@
-<mxfile host="app.diagrams.net" modified="2022-05-18T07:27:58.569Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36" etag="hV1yfYqJv2DKEnPQNlwS" version="18.0.4" type="github">
+<mxfile host="app.diagrams.net" modified="2022-05-18T15:56:47.826Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36" etag="cP41rPviQLfpxlexiBBb" version="18.0.4" type="github">
   <diagram id="mjWNPQMZ38kRxQa0yu5l" name="Page-1">
-    <mxGraphModel dx="1183" dy="768" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1455" dy="945" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-105" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
-          <mxGeometry x="130" y="880" width="590" height="160" as="geometry" />
+          <mxGeometry x="130" y="920" width="590" height="160" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-6" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
           <mxGeometry x="230" y="250" width="520" height="120" as="geometry" />
@@ -79,7 +79,7 @@
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-15" value="Stop&lt;br&gt;不接收新任务和进程队列任务&lt;br&gt;打断所有进程队列正在运行的任务" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry y="640" width="190" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-16" value="Tidying&lt;br&gt;所有任务终止，待处理任务数量为0&lt;br&gt;执行terminated钩子函数" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-16" value="Tidying&lt;br&gt;待处理任务数量为0&lt;br&gt;执行terminated钩子函数(子类重写#&lt;span style=&quot;font-family: &amp;quot;JetBrains Mono&amp;quot;, monospace; font-size: 9.8pt; background-color: rgb(255, 255, 255);&quot;&gt;tryTerminate()&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;)&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry y="710" width="190" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-17" value="Terminated&lt;br&gt;terminated()执行完成" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -92,7 +92,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-40" value="Running" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="300" y="510" width="120" height="60" as="geometry" />
+          <mxGeometry x="217.5" y="580" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-44" value="&lt;meta charset=&quot;utf-8&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 11px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;#ShutDownNow()&lt;/span&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;" parent="1" source="Xi_-Juw8ynzdb2QV2Gdj-41" target="Xi_-Juw8ynzdb2QV2Gdj-43" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -101,13 +101,13 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-41" value="ShutDown" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="300" y="630" width="120" height="60" as="geometry" />
+          <mxGeometry x="217.5" y="700" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=1;" parent="1" source="Xi_-Juw8ynzdb2QV2Gdj-43" target="Xi_-Juw8ynzdb2QV2Gdj-46" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="615" y="700" />
-              <mxPoint x="360" y="700" />
+              <mxPoint x="532.5" y="770" />
+              <mxPoint x="277.5" y="770" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -117,36 +117,36 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-43" value="Stop" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="555" y="630" width="120" height="60" as="geometry" />
+          <mxGeometry x="472.5" y="700" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-53" value="&lt;meta charset=&quot;utf-8&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 11px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;#terminated()&lt;/span&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;" parent="1" source="Xi_-Juw8ynzdb2QV2Gdj-46" target="Xi_-Juw8ynzdb2QV2Gdj-52" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-46" value="Tidying" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="300" y="750" width="120" height="60" as="geometry" />
+          <mxGeometry x="217.5" y="820" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-52" value="Terminated" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="555" y="750" width="120" height="60" as="geometry" />
+          <mxGeometry x="472.5" y="820" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-54" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=13;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="7" y="870" as="sourcePoint" />
-            <mxPoint x="827" y="870" as="targetPoint" />
+            <mxPoint x="7" y="910" as="sourcePoint" />
+            <mxPoint x="827" y="910" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-55" value="线程池执行Task" style="labelPosition=center;verticalLabelPosition=middle;align=center;html=1;shape=mxgraph.basic.shaded_button;dx=10;fillColor=#E6E6E6;strokeColor=none;" parent="1" vertex="1">
-          <mxGeometry y="880" width="110" height="60" as="geometry" />
+          <mxGeometry y="920" width="110" height="60" as="geometry" />
         </mxCell>
         <mxCell id="aAxfQlusZvl9KiDwcJOO-19" value="执行Task" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1.008;entryY=-0.163;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="Xi_-Juw8ynzdb2QV2Gdj-56" target="aAxfQlusZvl9KiDwcJOO-10">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="870" y="1080" />
-              <mxPoint x="870" y="1450" />
+              <mxPoint x="870" y="1120" />
+              <mxPoint x="870" y="1490" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-56" value="核心线程&lt;br&gt;执行task" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="400" y="1050" width="120" height="60" as="geometry" />
+          <mxGeometry x="400" y="1090" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-58" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;" parent="1" source="Xi_-Juw8ynzdb2QV2Gdj-57" target="Xi_-Juw8ynzdb2QV2Gdj-56" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -155,35 +155,35 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-57" value="CoreThread&lt;br&gt;是否满" style="rhombus;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
-          <mxGeometry x="225" y="1050" width="130" height="60" as="geometry" />
+          <mxGeometry x="225" y="1090" width="130" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-68" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="Xi_-Juw8ynzdb2QV2Gdj-63" target="Xi_-Juw8ynzdb2QV2Gdj-70" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="435" y="1189" as="targetPoint" />
+            <mxPoint x="435" y="1229" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="aAxfQlusZvl9KiDwcJOO-15" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Xi_-Juw8ynzdb2QV2Gdj-63" target="Xi_-Juw8ynzdb2QV2Gdj-80">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-63" value="线程池正在运行&lt;br&gt;workQueue未满" style="rhombus;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
-          <mxGeometry x="225" y="1159" width="130" height="60" as="geometry" />
+          <mxGeometry x="225" y="1199" width="130" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-65" value="&lt;meta charset=&quot;utf-8&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 11px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;submit&lt;/span&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="aAxfQlusZvl9KiDwcJOO-1" target="Xi_-Juw8ynzdb2QV2Gdj-57" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="200" y="1080" as="sourcePoint" />
+            <mxPoint x="200" y="1120" as="sourcePoint" />
             <Array as="points">
-              <mxPoint x="200" y="1080" />
-              <mxPoint x="200" y="1080" />
+              <mxPoint x="200" y="1120" />
+              <mxPoint x="200" y="1120" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-76" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="Xi_-Juw8ynzdb2QV2Gdj-70" target="Xi_-Juw8ynzdb2QV2Gdj-77" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="655" y="1189" as="targetPoint" />
+            <mxPoint x="655" y="1229" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-70" value="加入WorkQueue" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="400" y="1159" width="120" height="60" as="geometry" />
+          <mxGeometry x="400" y="1199" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-79" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;" parent="1" source="Xi_-Juw8ynzdb2QV2Gdj-77" target="Xi_-Juw8ynzdb2QV2Gdj-78" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -192,10 +192,10 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-77" value="线程池停止运行" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-          <mxGeometry x="535" y="1159" width="130" height="60" as="geometry" />
+          <mxGeometry x="535" y="1199" width="130" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-78" value="WorkQueue移除任务" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="707" y="1159" width="120" height="60" as="geometry" />
+          <mxGeometry x="707" y="1199" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-82" value="Fail" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="Xi_-Juw8ynzdb2QV2Gdj-80" target="Xi_-Juw8ynzdb2QV2Gdj-81" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -204,46 +204,46 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-80" value="提交由最大线程数执行的任务" style="rhombus;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
-          <mxGeometry x="225" y="1320" width="130" height="60" as="geometry" />
+          <mxGeometry x="225" y="1360" width="130" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-81" value="执行拒绝策略" style="whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-          <mxGeometry x="50" y="1320" width="120" height="60" as="geometry" />
+          <mxGeometry x="50" y="1360" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-92" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;" parent="1" source="Xi_-Juw8ynzdb2QV2Gdj-90" target="Xi_-Juw8ynzdb2QV2Gdj-91" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-90" value="工作线程数==0" style="rhombus;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
-          <mxGeometry x="535" y="1260" width="130" height="60" as="geometry" />
+          <mxGeometry x="535" y="1300" width="130" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-91" value="addWork&lt;br&gt;提交最大线程执行任务" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="707" y="1260" width="120" height="60" as="geometry" />
+          <mxGeometry x="707" y="1300" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-98" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#dae8fc;strokeColor=#000000;" parent="1" source="Xi_-Juw8ynzdb2QV2Gdj-93" target="Xi_-Juw8ynzdb2QV2Gdj-94" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-93" value="CoreThread" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;lid=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-          <mxGeometry x="170" y="950" width="60" height="80" as="geometry" />
+          <mxGeometry x="170" y="990" width="60" height="80" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-99" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#dae8fc;strokeColor=#000000;" parent="1" source="Xi_-Juw8ynzdb2QV2Gdj-94" target="Xi_-Juw8ynzdb2QV2Gdj-95" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-94" value="BlockingQueue" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;lid=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-          <mxGeometry x="300" y="950" width="60" height="80" as="geometry" />
+          <mxGeometry x="300" y="990" width="60" height="80" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-103" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="Xi_-Juw8ynzdb2QV2Gdj-95" target="Xi_-Juw8ynzdb2QV2Gdj-101" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-95" value="MaxThread" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;lid=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-          <mxGeometry x="440" y="950" width="60" height="80" as="geometry" />
+          <mxGeometry x="440" y="990" width="60" height="80" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-101" value="reject" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-          <mxGeometry x="565" y="960" width="120" height="60" as="geometry" />
+          <mxGeometry x="565" y="1000" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Xi_-Juw8ynzdb2QV2Gdj-104" value="就像蓄水池一样，溢出就到下一个容器&lt;br&gt;直到执行拒绝策略" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="245" y="890" width="290" height="30" as="geometry" />
+          <mxGeometry x="245" y="930" width="290" height="30" as="geometry" />
         </mxCell>
         <mxCell id="aAxfQlusZvl9KiDwcJOO-1" value="ThreadPoolExecutor" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="10" y="1050" width="160" height="60" as="geometry" />
+          <mxGeometry x="10" y="1090" width="160" height="60" as="geometry" />
         </mxCell>
         <mxCell id="aAxfQlusZvl9KiDwcJOO-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="aAxfQlusZvl9KiDwcJOO-1">
           <mxGeometry y="26" width="160" height="8" as="geometry" />
@@ -252,7 +252,7 @@
           <mxGeometry y="34" width="160" height="26" as="geometry" />
         </mxCell>
         <mxCell id="aAxfQlusZvl9KiDwcJOO-8" value="ThreadPoolExecutor" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="165" y="1420" width="250" height="60" as="geometry" />
+          <mxGeometry x="165" y="1460" width="250" height="60" as="geometry" />
         </mxCell>
         <mxCell id="aAxfQlusZvl9KiDwcJOO-9" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="aAxfQlusZvl9KiDwcJOO-8">
           <mxGeometry y="26" width="250" height="8" as="geometry" />
@@ -261,7 +261,10 @@
           <mxGeometry y="34" width="250" height="26" as="geometry" />
         </mxCell>
         <mxCell id="aAxfQlusZvl9KiDwcJOO-23" value="&lt;h1&gt;What Do？(调用该方法都是为了执行task)&lt;/h1&gt;&lt;p&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;1.处于ShutDown状态下只允许启动已经存在的线程&lt;/span&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;2.RunState&amp;gt; ShutDown的情况下，不允许执行任何Task。&lt;/p&gt;&lt;p&gt;3.包装Task，启动task&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="165" y="1480" width="480" height="130" as="geometry" />
+          <mxGeometry x="165" y="1520" width="480" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="aAxfQlusZvl9KiDwcJOO-24" value="&lt;pre style=&quot;font-family: &amp;quot;JetBrains Mono&amp;quot;, monospace; font-size: 9.8pt;&quot;&gt;&lt;span style=&quot;background-color: rgb(213, 232, 212);&quot;&gt;&lt;span style=&quot;font-style: italic;&quot;&gt;RUNNING:  Accept new tasks and process queued tasks&lt;/span&gt;&lt;span style=&quot;font-style: italic;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;font-style: italic;&quot;&gt;SHUTDOWN: Don&#39;t accept new tasks, but process queued tasks&lt;/span&gt;&lt;span style=&quot;font-style: italic;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;font-style: italic;&quot;&gt;STOP:     Don&#39;t accept new tasks, don&#39;t process queued tasks,&lt;/span&gt;&lt;span style=&quot;font-style: italic;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;font-style: italic;&quot;&gt;          and interrupt in-progress tasks&lt;/span&gt;&lt;span style=&quot;font-style: italic;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;font-style: italic;&quot;&gt;TIDYING:  All tasks have terminated, workerCount is zero,&lt;/span&gt;&lt;span style=&quot;font-style: italic;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;font-style: italic;&quot;&gt;          the thread transitioning to state TIDYING&lt;/span&gt;&lt;span style=&quot;font-style: italic;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;font-style: italic;&quot;&gt;          will run the terminated() hook method&lt;/span&gt;&lt;span style=&quot;font-style: italic;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;font-style: italic;&quot;&gt;TERMINATED: terminated() has completed&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=#FFFFFF;align=left;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="217.5" y="430" width="490" height="130" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
