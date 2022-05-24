@@ -20,8 +20,12 @@ public class T04_ScheduledThreadPoolExecutor01 {
          */
         ScheduledExecutorService scheduledExecutorService = new ScheduledThreadPoolExecutor(1);
 
-
+        // 延迟执行任务
         scheduledExecutorService.schedule(() -> System.out.println("scheduled"), 10, TimeUnit.SECONDS);
+
+
+
+
         scheduledExecutorService.execute(() -> System.out.println("scheduled"));
 
 
