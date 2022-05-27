@@ -23,7 +23,7 @@ public class T04_ScheduledThreadPoolExecutor01 {
         // 延迟执行任务
         scheduledExecutorService.schedule(() -> System.out.println("scheduled"), 10, TimeUnit.SECONDS);
 
-        // 直接执行
+        // 直接执行,参考ThreadPoolExecutor的执行
         scheduledExecutorService.execute(() -> System.out.println("scheduled"));
 
 
