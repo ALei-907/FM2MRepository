@@ -18,13 +18,16 @@ public class T04_ScheduledThreadPoolExecutor01 {
          * 2.内部设置的Queue-{@link DelayedWorkQueue},是一个无界队列
          *   所以内部设置的最大线程数为Integer.MAX，其实是不生效的
          */
-        ScheduledExecutorService scheduledExecutorService = new ScheduledThreadPoolExecutor(1);
+        ScheduledThreadPoolExecutor scheduledExecutorService = new ScheduledThreadPoolExecutor(1);
+
+        // 直接执行,调用链：schedule(command, 0, NANOSECONDS);
+        scheduledExecutorService.execute(() -> System.out.println("scheduled"));
+
 
         // 延迟执行任务
         scheduledExecutorService.schedule(() -> System.out.println("scheduled"), 10, TimeUnit.SECONDS);
 
-        // 直接执行,参考ThreadPoolExecutor的执行
-        scheduledExecutorService.execute(() -> System.out.println("scheduled"));
+
 
 
         // 任务执行时开始计时
