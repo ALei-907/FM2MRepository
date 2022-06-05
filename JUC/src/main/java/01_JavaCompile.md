@@ -48,3 +48,17 @@ make images
 –with-conf-name：指定编译配置的名称,如果没有指定,则会生成默认的配置名称macosx-x86_64-server-slowdebug,我这里采用默认生成配置
 ```
 
+### Clion-Debug
+
+**MacOS**
+
+```bash
+# 1.生成MakeFile
+make compile-command
+# 2.打开所下载的JDK目录，通过debug java来进行测试
+```
+
+
+
+
+
