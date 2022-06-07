@@ -42,15 +42,19 @@ public class T04_ScheduledThreadPoolExecutor01 {
          *       2.ReentrantLock reentrantLock = new ReentrantLock();
          *         Condition condition = reentrantLock.newCondition();
          *       3.周期性调度的原理?
+         *       4.线程等待的情
          *
          */
-
-
         scheduledExecutorService.schedule(() -> System.out.println("scheduled"), 10, TimeUnit.SECONDS);
 
         // 直接执行,调用链：schedule(command, 0, NANOSECONDS);
         scheduledExecutorService.execute(() -> System.out.println("scheduled"));
 
+
+        /**
+         * 以下2个方法的差别实现 参见{@link ScheduledThreadPoolExecutor.ScheduledFutureTask#setNextRunTime()}
+         *
+         */
         // 任务执行时开始计时
         scheduledExecutorService.scheduleAtFixedRate(() -> {
             System.out.println(new Date());
