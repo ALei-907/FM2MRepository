@@ -38,11 +38,11 @@ public class T04_ScheduledThreadPoolExecutor01 {
          *            3.未到达目标时间
          */
         /**
-         * TODO: 1.delay为负数的情况？
+         * TODO: 1.delay为负数的情况 => 任务执行完成后才计时
          *       2.ReentrantLock reentrantLock = new ReentrantLock();
          *         Condition condition = reentrantLock.newCondition();
-         *       3.周期性调度的原理?
-         *       4.线程等待的情
+         *         => 条件等待
+         *       3.周期性调度的原理 => TaskQueue里的任务执行完成后，设置好time,重新加入TaskQueue
          *
          */
         scheduledExecutorService.schedule(() -> System.out.println("scheduled"), 10, TimeUnit.SECONDS);
