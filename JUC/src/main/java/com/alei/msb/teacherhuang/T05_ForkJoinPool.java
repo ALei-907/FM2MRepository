@@ -1,5 +1,9 @@
 package com.alei.msb.teacherhuang;
 
+import sun.misc.Unsafe;
+
+import java.util.concurrent.ForkJoinPool;
+
 /**
  * @Author LeiLiMin
  * @Description:
@@ -17,6 +21,14 @@ public class T05_ForkJoinPool {
      * 5.工作队列与内部线程互相持有引用
      */
     public static void main(String[] args) {
+        /**
+         * {@link ForkJoinPool#queues}: 存放队列(外部队列,内部队列)
+         * {@link ForkJoinPool.WorkQueue#array}: 存放任务
+         */
+        ForkJoinPool forkJoinPool = new ForkJoinPool();
+        // target: 看看执行过程.以及FJP的初始化
+        forkJoinPool.submit(()->{System.out.println("Hello FJP");});
 
+        // Unsafe
     }
 }
