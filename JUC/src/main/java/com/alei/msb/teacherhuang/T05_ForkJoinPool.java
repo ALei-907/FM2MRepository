@@ -28,7 +28,7 @@ public class T05_ForkJoinPool {
         ForkJoinPool forkJoinPool = new ForkJoinPool();
         // target: 看看执行过程.以及FJP的初始化
         forkJoinPool.submit(()->{System.out.println("Hello FJP");});
-
+        // rs(具体数值) 的含义需要留意
         // Unsafe
     }
 }
