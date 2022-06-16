@@ -10,7 +10,7 @@ import java.util.List;
  * @date: 2022/6/15
  */
 @Data
-public class CustomRobotConfig {
+public class CustomRobotConfig implements RobotConfig{
     /**
      * 推送目标地址
      */

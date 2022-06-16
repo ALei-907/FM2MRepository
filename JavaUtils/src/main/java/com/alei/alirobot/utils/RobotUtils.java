@@ -24,8 +24,7 @@ public class RobotUtils {
      * header中的timestamp + "\n" + 机器人的appSecret当做签名字符串，使用HmacSHA256算法计算签名，然后进行Base64 encode，得到最终的签名值。
      * @param appSecret: 对应"群机器人"的数字签名
      */
-    public static String calculateSign(String appSecret) throws Exception  {
-        long currentMills = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
+    public static String calculateSign(String appSecret,long currentMills) throws Exception  {
         // 2.生产数字签名
         String stringToSign = currentMills + "\n" + appSecret;
         Mac mac = Mac.getInstance("HmacSHA256");
