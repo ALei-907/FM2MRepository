@@ -12,5 +12,5 @@ public interface Request {
     /**
      * 用来将封装请求数据Map
      */
-    Map<String, Object> putInfo();
+    Map<String, Object> putInfo() throws IllegalAccessException;
 }
