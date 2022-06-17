@@ -1,5 +1,6 @@
-package com.alei.alirobot.service;
+package com.alei.alirobot.client;
 
+import com.alei.alirobot.config.RobotConfig;
 import com.alei.alirobot.request.AbstractRequest;
 
 /**
@@ -10,7 +11,7 @@ public interface RobotClient {
     /**
      * 发送消息
      */
-    void sendMsg(AbstractRequest request);
+    void sendMsg(RobotConfig config,AbstractRequest request);
 
 
 }

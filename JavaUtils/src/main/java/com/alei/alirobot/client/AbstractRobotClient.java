@@ -1,4 +1,4 @@
-package com.alei.alirobot.service;
+package com.alei.alirobot.client;
 
 import com.alei.alirobot.config.RobotConfig;
 import com.alei.alirobot.request.AbstractRequest;

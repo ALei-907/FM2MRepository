@@ -1,4 +1,4 @@
-package com.alei.alirobot.test;
+package com.alei.alirobot.okhttp;
 
 import com.google.gson.Gson;
 import lombok.Data;

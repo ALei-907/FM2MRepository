@@ -40,7 +40,7 @@ public class RobotUtils {
      * 将对象转为Map< String , Object >
      * @param obj: 需要进行转换的对象
      */
-    public static Map<String, Object> objConvertMap(Object obj) throws IllegalAccessException {
+    public static Map<String, Object> objConvertToMap(Object obj) throws IllegalAccessException {
         Map<String, Object> map = new HashMap<>();
         for (Field field : obj.getClass().getDeclaredFields()) {
             field.setAccessible(true);
