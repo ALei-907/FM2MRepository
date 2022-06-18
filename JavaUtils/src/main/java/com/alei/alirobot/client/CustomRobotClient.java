@@ -49,7 +49,7 @@ public class CustomRobotClient extends AbstractRobotClient<CustomRobotConfig> {
         // 1.加签信息
         headerParamMap.put(ConfigConstant.ACCESS_TOKEN, config.getAccessToken());
 
-        // 2.时间戳 TODO: 时区设置
+        // 2.时间戳
         headerParamMap.put(ConfigConstant.TIMESTAMP, String.valueOf(currentMills));
 
         // 3.数字签名
@@ -67,6 +67,7 @@ public class CustomRobotClient extends AbstractRobotClient<CustomRobotConfig> {
             Map<String, String> headerParam = this.settingHeaderParamByConfig(config);
 
             OkhttpClientUtil okhttpClientUtil = new OkhttpClientUtil();
+            // 可以根据Common设置异步发送请求
             Response post = okhttpClientUtil.post(config.getWebhook(), headerParam, request.putInfo());
             log.debug("[CustomRobotClient sendBasicMsg] sendMsg success,post[{}]", post);
         } catch (IOException e) {
