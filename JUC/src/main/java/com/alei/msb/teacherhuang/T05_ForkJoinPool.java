@@ -21,8 +21,9 @@ public class T05_ForkJoinPool {
      * 5.工作队列与内部线程互相持有引用
      */
     public static void main(String[] args) {
+        // TODO: 先研习Jdk8然后在回头看JDK18
         /**
-         * {@link ForkJoinPool#queues}: 存放队列(外部队列,内部队列)
+         * {@link ForkJoinPool#queues}: 存放队列(外部队列,内部队列),JDK18在创建对象时已经进行初始化
          * {@link ForkJoinPool.WorkQueue#array}: 存放任务
          */
         ForkJoinPool forkJoinPool = new ForkJoinPool();
