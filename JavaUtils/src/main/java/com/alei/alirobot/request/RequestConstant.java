@@ -21,5 +21,13 @@ public interface RequestConstant {
      */
     String MSG_TYPE_LINK = "link";
 
+    /**
+     * 基础消息类型: link
+     */
+    String MSG_TYPE_MARKDOWN = "markdown";
 
+    /**
+     * 基础消息类型: actionCard
+     */
+    String MSG_TYPE_ACTIONCARD = "actionCard";
 }

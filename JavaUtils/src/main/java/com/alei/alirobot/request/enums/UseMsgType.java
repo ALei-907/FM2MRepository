@@ -20,17 +20,27 @@ public enum UseMsgType {
     /**
      * 基础消息类型: 链接
      */
-    LINK_BASIC_MSG(MsgType.BASIC_MSG, "link");
+    LINK_BASIC_MSG(MsgType.BASIC_MSG, "link"),
+
+    /**
+     * 基础消息类型: markdown
+     */
+    MARKDOWN_BASIC_MSG(MsgType.BASIC_MSG, "markdown"),
+
+    /**
+     * 基础消息类型: ActionCard
+     */
+    ACTIONCARD_BASIC_MSG(MsgType.BASIC_MSG, "actionCard");
 
     /**
      * 消息类型
      */
-    private MsgType msgType;
+    private final MsgType msgType;
 
     /**
      * 使用消息类型
      */
-    private String useMsgType;
+    private final String useMsgType;
 
     /**
      * 根据"使用消息类型"来返回消息类型,以决定使用具体发送方式

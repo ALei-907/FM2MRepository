@@ -25,4 +25,10 @@ public interface ConfigConstant {
      * Config参数: 签名
      */
     String SIGN = "sign";
+
+    /**
+     * 自定义机器人WebHook前缀
+     */
+    String CUSTOM_WEBHOOK = "https://oapi.dingtalk.com/robot/send";
+
 }
