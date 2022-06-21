@@ -30,7 +30,16 @@ public class T05_ForkJoinPool {
         // target: 看看执行过程.以及FJP的初始化
         // 任务队列并不在new时创建，而是在首次执行任务时
         forkJoinPool.submit(()->{System.out.println("Hello FJP");});
-        // rs(具体数值) 的含义需要留意
-        // Unsafe
+    }
+
+    public static void java8(){
+        /**
+         * submit -> for(;;){
+         *              if( 1.create WorkerQueues )
+         *              else if( 2.find workerQueue     -> insert task )
+         *              else if( 3.create workerQueue )
+         *              else if( 4.get random seed again )
+         *           }
+         */
     }
 }
