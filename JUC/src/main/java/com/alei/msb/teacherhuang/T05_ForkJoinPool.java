@@ -41,6 +41,8 @@ public class T05_ForkJoinPool {
 
     public static void java8() {
         /**
+         * construct: 对Ctl进行初始化,[16bit] [16bit] [16bit] [16bit]
+         *                          负数     相同负数 0       0
          * submit -> for(;;){
          *              if( 1.create WorkerQueues )
          *              else if( 2.find workerQueue     -> insert task ) -> 偶数队列 {@link ForkJoinPool#queues}
