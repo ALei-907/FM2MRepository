@@ -211,3 +211,112 @@
 
 ```
 
+### ForkJoin#tryAddWorker()
+
+```java
+    private void tryAddWorker(long c) {
+        boolean add = false;
+        do {
+            // 对AC和TAC分别+1
+            long nc = ((AC_MASK & (c + AC_UNIT)) |
+                       (TC_MASK & (c + TC_UNIT)));
+            if (ctl == c) {
+                int rs, stop; 
+                // 确认fjp未停止
+                if ((stop = (rs = lockRunState()) & STOP) == 0)
+                    // CAS 修改状态
+                    add = U.compareAndSwapLong(this, CTL, c, nc);
+                unlockRunState(rs, rs & ~RSLOCK);
+                if (stop != 0)
+                    break;
+                if (add) {
+                    // 创建工作窃取线程
+                    createWorker();
+                    break;
+                }
+            }
+        } while (((c = ctl) & ADD_WORKER) != 0L && (int)c == 0);
+    }
+
+```
+
+### 创建FJT
+
+```java
+ protected ForkJoinWorkerThread(ForkJoinPool pool) {
+        // 让ForkJoinPool与Fjt互相持有引用
+        // 让workerQueue与Fjt互相持有引用
+        super("aForkJoinWorkerThread");
+        this.pool = pool;
+        this.workQueue = pool.registerWorker(this);
+    }
+```
+
+### ForkJoinPool#registerWorker()
+
+```java
+    final WorkQueue registerWorker(ForkJoinWorkerThread wt) {
+        UncaughtExceptionHandler handler;
+        // 设置守护线程标志位
+        wt.setDaemon(true);
+        // 设置异常处理器
+        if ((handler = ueh) != null)
+            wt.setUncaughtExceptionHandler(handler);
+        // 创建WorkerQueue
+        WorkQueue w = new WorkQueue(this, wt);
+        int i = 0;                                    // assign a pool index
+        /**
+        * static final int MODE_MASK    = 0xffff << 16;  // 低32位的高16位为1
+        * 根据构造方法中可知config的第17位保存FIFO或者LIFO模型
+        * FIFO: mode = 0000 0001 0000 1000
+        * LIFO: mode = 0000 0000 0000 1000
+        */
+        int mode = config & MODE_MASK;
+        int rs = lockRunState();
+        try {
+            WorkQueue[] ws; int n;                    
+            // 确认wqs可用
+            if ((ws = workQueues) != null && (n = ws.length) > 0) {
+                /**
+                * indexSeed: 默认0
+                * SEED_INCREMENT: 一个大质数
+                */
+                int s = indexSeed += SEED_INCREMENT;  // unlikely to collide
+                int m = n - 1;
+                // 生产索引,通过|1得到奇数下标 => wqs的奇数下标处的wq为窃取线程的任务队列
+                i = ((s << 1) | 1) & m; 
+                // ws不等于空，就进行二次寻址
+                if (ws[i] != null) {                  
+                    int probes = 0; 
+                    /**
+                    * static final int EVENMASK     = 0xfffe; // 65534 => 1111111111111110
+                    * 确定二次寻址的步长
+                    *    1.wqs的长度<=4: 步长为2
+                    *    2.wqs的长度>4: wqs.length/2 & 1111111111111110
+                    *                : 步长等于wqs.length/2 + 2
+                    */
+                    int step = (n <= 4) ? 2 : ((n >>> 1) & EVENMASK) + 2;
+                    while (ws[i = (i + step) & m] != null) {
+                        // 寻址次数过多,就对wqs进行扩容
+                        // "涉及到具体的什么算法,没看明白"
+                        if (++probes >= n) {
+                            workQueues = ws = Arrays.copyOf(ws, n <<= 1);
+                            m = n - 1;
+                            probes = 0;
+                        }
+                    }
+                }
+            w.hint = s;                           // s作为随机数保存在wq的hint中
+            w.config = i | mode;                  // 保存索引下标 + 模式
+            w.scanState = i;                      // scanState为volatile，此时对它进行写操作，ss写成功，上面的变量一定可见，且不会和下面的ws[i]赋值发生重排序。注意这里的scanState就变成了odd，也即奇数，所以要开始扫描获取任务并执行
+            ws[i] = w; // 放入全局队列中
+            }
+        } finally {
+            unlockRunState(rs, rs & ~RSLOCK);
+        }
+        wt.setName(workerNamePrefix.concat(Integer.toString(i >>> 1)));
+        return w;
+    }
+
+```
+
