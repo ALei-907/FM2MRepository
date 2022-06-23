@@ -174,21 +174,36 @@
                     tryAddWorker(c);
                 break;
             }
-            if (ws == null)                            // unstarted/terminated
+            if (ws == null)        // 什么情况？fjp处于为Stared的状态或者已经terminated
                 break;
             if (ws.length <= (i = sp & SMASK))         // terminated
                 break;
             if ((v = ws[i]) == null)                   // terminating
                 break;
+            /**
+            * static final int INACTIVE     = 1 << 31;       // must be negative
+            * static final int SS_SEQ       = 1 << 16;       // version count
+            * sp：ctl的底32位 => 侧面推断ctl的低32位的高16位为idle worker的版本计数
+            */
             int vs = (sp + SS_SEQ) & ~INACTIVE;        // next scanState
             int d = sp - v.scanState;                  // screen CAS
+            /**
+            * private static final long SP_MASK    = 0xffffffffL; // long 高32:全0，底32全1
+    				* private static final long UC_MASK    = ~SP_MASK;    // long 高32:全1，底32全0
+    				* nc: 下一个状态
+    				*   : ctl的高32位对ActiveWorker+1
+    				*   : ctl的低32位的低16位保留了更新未当前唤醒线程的下一个线程
+            */
             long nc = (UC_MASK & (c + AC_UNIT)) | (SP_MASK & v.stackPred);
+            // CAS更新ctl成功就进行唤醒
             if (d == 0 && U.compareAndSwapLong(this, CTL, c, nc)) {
                 v.scanState = vs;                      // activate v
+                // 唤醒线程
                 if ((p = v.parker) != null)
                     U.unpark(p);
                 break;
             }
+            // q.base == q.top：表示任务被其他工作线程窃取完了
             if (q != null && q.base == q.top)          // no more work
                 break;
         }
