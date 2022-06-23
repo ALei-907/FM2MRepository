@@ -1,3 +1,44 @@
+### ForkJoinPool#Construct
+
+```java
+  private ForkJoinPool(int parallelism, // Cpu核心数
+                         ForkJoinWorkerThreadFactory factory,// 线程工厂
+                         UncaughtExceptionHandler handler, // 异常处理器
+                         int mode, // FIFO,LIFO模型
+                         String workerNamePrefix) {
+        this.workerNamePrefix = workerNamePrefix;
+        // 线程工厂
+        this.factory = factory;
+        this.ueh = handler;
+        /**
+        * static final int SMASK        = 0xffff; // 1111 1111 1111 1111
+        * static final int FIFO_QUEUE   = 1 << 16;
+        * static final int LIFO_QUEUE   = 0; 
+        * 以核心数8举例：(1000 & 1111 1111 1111 1111) ｜ mode
+        *          FIFO: 1 0000 0000 0000 1000
+        *          LIFO: 0 0000 0000 0000 1000
+        */
+        this.config = (parallelism & SMASK) | mode;
+        // 负数在内存中以补码表示
+        long np = (long)(-parallelism); // 1 1111 ... 1111 ....1000 为什么取反？见下
+        /**
+        *     private static final int  AC_SHIFT   = 48;
+        *     private static final long AC_UNIT    = 0x0001L << AC_SHIFT;
+        *     private static final long AC_MASK    = 0xffffL << AC_SHIFT;
+        *     private static final int  TC_SHIFT   = 32;
+        *     private static final long TC_UNIT    = 0x0001L << TC_SHIFT;
+        *     private static final long TC_MASK    = 0xffffL << TC_SHIFT;
+        * 
+        *     ((np << AC_SHIFT) & AC_MASK) = 1111 1111 1111 1000 ...48个0
+        *     ((np << TC_SHIFT) & TC_MASK) = 1111 1111 1111 1000 ...32个0
+        *     ctl = 1111 1111 1111 1000 1111 1111 1111 1000 ...32个0
+        */
+        this.ctl = ((np << AC_SHIFT) & AC_MASK) | ((np << TC_SHIFT) & TC_MASK);
+    }
+```
+
+
+
 ### ForkJoinPool#externalSubmit()
 
 ```java
@@ -90,8 +131,9 @@
             else if (((rs = runState) & RSLOCK) == 0) { 
                 q = new WorkQueue(this, null);
                 q.hint = r; // 可以r可以获取到其在workerQueues的索引下标
-                q.config = k | SHARED_QUEUE; // 没搞明白
-                q.scanState = INACTIVE;      // 没搞明白
+                q.config = k | SHARED_QUEUE; // SHARED_QUEUE = 1 << 31；这里就是将整形int的符号位置1，所以为负数，SHARED_QUEUE表明当前队列是共享队列（外部提交队列）。而k为当前wq处于wqs中的索引下标
+                q.scanState = INACTIVE;      // 由于当前wq并没有进行扫描任务，所以扫描状态位无效状态INACTIVE
+
                 rs = lockRunState();           // publish index
                 // 加锁 并最后进行一次确认,如果workerQueues的状态符合条件的话,就存入workerQueues
                 if (rs > 0 &&  (ws = workQueues) != null &&
@@ -104,6 +146,51 @@
             // 重新生成随机种子
             if (move)
                 r = ThreadLocalRandom.advanceProbe(r);
+        }
+    }
+
+```
+
+### ForkJoin#signalWork()
+
+```java
+    final void signalWork(WorkQueue[] ws, WorkQueue q) {
+        long c; int sp, i; WorkQueue v; Thread p;
+       /**
+       * ctl在构成方法时置为负数,详细见上对ForkJoin构造方法的补充解释
+       * 根据fjp的构造方法可知,当active达到最大并行度时,ctl的符号位会溢出,变为ctl>0
+       */
+        while ((c = ctl) < 0L) {                       // 活跃线程数未达到阈值
+            // long向下转型,保留底32位,从构造方法中可知,默认为0
+            if ((sp = (int)c) == 0) {                  // 没有空闲线程
+                /**
+                *     private static final long ADD_WORKER = 0x0001L << (TC_SHIFT + 15); 
+								*    																			 = 0x0001L << 47
+								*     根据fjp的构造方法可知，ctl高32位中的第16位保存TotalWorkers的计数，
+								*         1.如果超出最大并行度，那么第48位为0,因为不断累加产生溢出
+								*         2.如果还为1,表示还未达到最大并行度,可以进行创建工作线程
+                */
+                if ((c & ADD_WORKER) != 0L)            // worker还未达到饱和
+                    tryAddWorker(c);
+                break;
+            }
+            if (ws == null)                            // unstarted/terminated
+                break;
+            if (ws.length <= (i = sp & SMASK))         // terminated
+                break;
+            if ((v = ws[i]) == null)                   // terminating
+                break;
+            int vs = (sp + SS_SEQ) & ~INACTIVE;        // next scanState
+            int d = sp - v.scanState;                  // screen CAS
+            long nc = (UC_MASK & (c + AC_UNIT)) | (SP_MASK & v.stackPred);
+            if (d == 0 && U.compareAndSwapLong(this, CTL, c, nc)) {
+                v.scanState = vs;                      // activate v
+                if ((p = v.parker) != null)
+                    U.unpark(p);
+                break;
+            }
+            if (q != null && q.base == q.top)          // no more work
+                break;
         }
     }
 
