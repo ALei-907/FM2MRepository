@@ -240,6 +240,30 @@
 
 ```
 
+### ForkJoinPool#createWorker()
+
+```java
+    private boolean createWorker() {
+        ForkJoinWorkerThreadFactory fac = factory;
+        Throwable ex = null;
+        ForkJoinWorkerThread wt = null;
+        try {
+            // 创建FJT
+            if (fac != null && (wt = fac.newThread(this)) != null) {
+                wt.start();
+                return true;
+            }
+        } catch (Throwable rex) {
+            ex = rex;
+        }
+        // 创建失败,就还原状态
+        deregisterWorker(wt, ex);
+        return false;
+    }
+```
+
+
+
 ### 创建FJT
 
 ```java
