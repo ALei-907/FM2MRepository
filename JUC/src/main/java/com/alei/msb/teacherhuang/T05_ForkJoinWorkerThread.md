@@ -105,3 +105,89 @@
         }
 ```
 
+### ForkJoinPool#scan()
+
+```java
+    private ForkJoinTask<?> scan(WorkQueue w, int r) {
+        WorkQueue[] ws; int m;
+      	// 日常判空
+        if ((ws = workQueues) != null && (m = ws.length - 1) > 0 && w != null) {
+          	// 第一次进来的w.scanState=w在wqs的下标值,具体见ForkJoinPool#registerWorker
+            // 是个正数
+            int ss = w.scanState; 
+          	/**
+          	* 代表随机取出的wq在wqs的索引位置
+          	* k: 后续可以标识是否对wqs进行一次完整的遍历
+          	* oldSum:
+          	* checkSum:
+          	*/
+            for (int origin = r & m, k = origin, oldSum = 0, checkSum = 0;;) {
+                WorkQueue q; ForkJoinTask<?>[] a; ForkJoinTask<?> t;
+                int b, n; long c;
+              	// 如果当前队列不为空,就尝试进行获取任务
+                if ((q = ws[k]) != null) {
+                  	// n = (b = q.base) - q.top) < 0: 标识当前剩余是否有待执行的任务数量
+                    if ((n = (b = q.base) - q.top) < 0 &&
+                        // 由于是工作窃取线程: 所以有一种情况,一个新的工作窃取线程刚创建完,对应的wq.array并未初始化,所以要进行判空校验
+                        // 如果该队列存在就开始获取执行
+                        (a = q.array) != null) {
+                      	// 计算任务数组的base指针索引
+                        long i = (((a.length - 1) & b) << ASHIFT) + ABASE;
+                      	// 获取任务,对base进行再次校验
+                        if ((t = ((ForkJoinTask<?>)
+                                  U.getObjectVolatile(a, i))) != null &&
+                            q.base == b) {
+                          	// 状态有效判断
+                            if (ss >= 0) {
+                                if (U.compareAndSwapObject(a, i, t, null)) {
+                                  	// Base指针+1
+                                    q.base = b + 1;
+                                  	// 代表还存在更多的任务需要处理,唤醒其他工作线程
+                                    if (n < -1)       
+                                        signalWork(ws, q);
+                                  	// 返回任务继续执行
+                                    return t;
+                                }
+                            }
+                            // oldSum未改变之前，才能判断w的扫描状态，如果扫描状态小于0，代表INACITVE，此时需要尝试唤醒空闲线程进行扫描工作
+                            else if (oldSum == 0 &&   
+                                     w.scanState < 0)
+                                tryRelease(c = ctl, ws[m & (int)c], AC_UNIT);
+                        }
+                      	// 扫描状态小于0，代表INACITVE,就重新扫描
+                        if (ss < 0)                   // refresh
+                            ss = w.scanState;
+                        r ^= r << 1; r ^= r >>> 3; r ^= r << 10;
+                      	// 所有的状态位重新置位
+                        origin = k = r & m;           
+                        oldSum = checkSum = 0;
+                        continue;
+                    }
+                    // 通过base数值来进行校验和计算
+                  	// 因为Base和Top是一直向上累加的,所以校验和可以保证其正确性
+                    checkSum += b;
+                }
+                if ((k = (k + 1) & m) == origin) {    // continue until stable
+                    if ((ss >= 0 || (ss == (ss = w.scanState))) &&
+                        oldSum == (oldSum = checkSum)) {
+                        if (ss < 0 || w.qlock < 0)    // already inactive
+                            break;
+                        int ns = ss | INACTIVE;       // try to inactivate
+                        long nc = ((SP_MASK & ns) |
+                                   (UC_MASK & ((c = ctl) - AC_UNIT)));
+                        w.stackPred = (int)c;         // hold prev stack top
+                        U.putInt(w, QSCANSTATE, ns);
+                        if (U.compareAndSwapLong(this, CTL, c, nc))
+                            ss = ns;
+                        else
+                            w.scanState = ss;         // back out
+                    }
+                    checkSum = 0;
+                }
+            }
+        }
+        return null;
+    }
+
+```
+
