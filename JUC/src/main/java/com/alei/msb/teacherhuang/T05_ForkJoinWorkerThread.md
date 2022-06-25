@@ -167,14 +167,31 @@
                   	// 因为Base和Top是一直向上累加的,所以校验和可以保证其正确性
                     checkSum += b;
                 }
-                if ((k = (k + 1) & m) == origin) {    // continue until stable
+                // 对wqs的遍历正好经历了一个周期
+                if ((k = (k + 1) & m) == origin) { 
+                    /**
+                    * 如果处于非活跃状改，就获取新的扫描状态
+                    * 如果新的扫描状态!=旧的扫描状态就不执行该分支
+                    * 最后确认校验和: 第一遍扫描将checksum赋值给oldsum,
+                    *               第二遍的时候如果wqs没有元素上的改变,新的checksum还是会等于旧的checksum，也就是本次的oldsum
+                    *               想要表达的意思就是扫描状态没有变化,没有其他线程操作队列
+                    */
                     if ((ss >= 0 || (ss == (ss = w.scanState))) &&
+                        
                         oldSum == (oldSum = checkSum)) {
                         if (ss < 0 || w.qlock < 0)    // already inactive
                             break;
-                        int ns = ss | INACTIVE;       // try to inactivate
+                        int ns = ss | INACTIVE;       // 状态置为INACTIVE
                         long nc = ((SP_MASK & ns) |
-                                   (UC_MASK & ((c = ctl) - AC_UNIT)));
+                                   (UC_MASK & ((c = ctl) - AC_UNIT)));// 活跃线程数减1
+                      	/**
+                      	* 怎么理解？
+                      	* 制作下一个ctl的值: 低32位保存了当前成为非活跃线程的信息
+                      	*                  1....ss : 1代表了当前位非活跃线程,ss代表了该wq在wqs的索引位置
+                      	* w.stackPred = (int)c: 与上同理,都是保存了ctl的低32位信息
+                      	* 怎么关联？
+                      	* 通过当前ctl的第32位，可以获取到对应的wq,而wq里保存了上次ownerThread的引用
+                      	*/
                         w.stackPred = (int)c;         // hold prev stack top
                         U.putInt(w, QSCANSTATE, ns);
                         if (U.compareAndSwapLong(this, CTL, c, nc))
