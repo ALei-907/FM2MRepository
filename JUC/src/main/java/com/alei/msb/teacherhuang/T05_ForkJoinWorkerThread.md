@@ -187,7 +187,7 @@
                       	/**
                       	* 怎么理解？
                       	* 制作下一个ctl的值: 低32位保存了当前成为非活跃线程的信息
-                      	*                  1....ss : 1代表了当前位非活跃线程,ss代表了该wq在wqs的索引位置
+                      	*                  1....ss : 1代表了当前为非活跃线程,ss代表了该wq在wqs的索引位置
                       	* w.stackPred = (int)c: 与上同理,都是保存了ctl的低32位信息
                       	* 怎么关联？
                       	* 通过当前ctl的第32位，可以获取到对应的wq,而wq里保存了上次ownerThread的引用
@@ -206,5 +206,34 @@
         return null;
     }
 
+```
+
+### WorkQueue#runTask()
+
+```java
+     final void runTask(ForkJoinTask<?> task) {
+            if (task != null) {
+              	/**
+              	*  static final int SCANNING     = 1;   
+              	*  ~SCANNING=1111 1111 1111 1111 1111 1111 1111 1110
+              	*  本质,将该wq的scanState设置为偶数(scanState的组成部就包括了wqs中的index)，偶数的index表示为外部队列,也将符号位置为1,也就是 INACTIVE
+              	*  变相把该队列标记为忙碌状态
+              	*/
+                scanState &= ~SCANNING; // mark as busy
+              	// 执行任务
+                (currentSteal = task).doExec();
+                U.putOrderedObject(this, QCURRENTSTEAL, null); // release for GC
+              	// 执行本地任务。为何执行本地任务？考虑一个问题：谁能往当前线程的工作队列里放任务？当前线程在执行FJT时往自己队列里放了任务，也只有当前线程才能往array任务数组里放任务
+                execLocalTasks();
+                ForkJoinWorkerThread thread = owner;
+                 // nsteals代表了当前线程总的偷取的任务数量。由于符号限制，所以检查是否发生符号溢出 
+                if (++nsteals < 0)     
+                    //  // 当前线程32位计数值达到饱和，那么将其加到FJP的全局变量的64位计数器中，并且清零计数值 nsteals
+                    transferStealCount(pool);
+                scanState |= SCANNING;  // 任务执行完成，恢复扫描状态
+                if (thread != null)
+                    thread.afterTopLevelExec(); // 任务执行完的钩子函数
+            }
+        }
 ```
 
