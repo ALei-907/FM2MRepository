@@ -240,3 +240,64 @@
         }
 ```
 
+### ForkJoinPool#awaitWork()
+
+```java
+    private boolean awaitWork(WorkQueue w, int r) {
+        // 日常判空 , 判断fjp是否处于待结束状态
+        if (w == null || w.qlock < 0) 
+            return false;
+        //等待自选数
+        for (int pred = w.stackPred, spins = SPINS, ss;;) {
+            if ((ss = w.scanState) >= 0)
+                break;
+            else if (spins > 0) {
+                r ^= r << 6; r ^= r >>> 21; r ^= r << 7;
+                if (r >= 0 && --spins == 0) {         // randomize spins
+                    WorkQueue v; WorkQueue[] ws; int s, j; AtomicLong sc;
+                    if (pred != 0 && (ws = workQueues) != null &&
+                        (j = pred & SMASK) < ws.length &&
+                        (v = ws[j]) != null &&        // see if pred parking
+                        (v.parker == null || v.scanState >= 0))
+                        spins = SPINS;                // continue spinning
+                }
+            }
+            else if (w.qlock < 0)                     // recheck after spins
+                return false;
+           // 等待核心
+            else if (!Thread.interrupted()) {
+                long c, prevctl, parkTime, deadline;
+                int ac = (int)((c = ctl) >> AC_SHIFT) + (config & SMASK);
+                if ((ac <= 0 && tryTerminate(false, false)) ||
+                    (runState & STOP) != 0)           // pool terminating
+                    return false;
+                if (ac <= 0 && ss == (int)c) {        // is last waiter
+                    prevctl = (UC_MASK & (c + AC_UNIT)) | (SP_MASK & pred);
+                    int t = (short)(c >>> TC_SHIFT);  // shrink excess spares
+                    if (t > 2 && U.compareAndSwapLong(this, CTL, c, prevctl))
+                        return false;                 // else use timed wait
+                    parkTime = IDLE_TIMEOUT * ((t >= 0) ? 1 : 1 - t);
+                    deadline = System.nanoTime() + parkTime - TIMEOUT_SLOP;
+                }
+                else
+                    prevctl = parkTime = deadline = 0L;
+                Thread wt = Thread.currentThread();
+                U.putObject(wt, PARKBLOCKER, this);   // emulate LockSupport
+                w.parker = wt;
+                if (w.scanState < 0 && ctl == c)      // recheck before park
+                    U.park(false, parkTime);
+                U.putOrderedObject(w, QPARKER, null);
+                U.putObject(wt, PARKBLOCKER, null);
+                if (w.scanState >= 0)
+                    break;
+                if (parkTime != 0L && ctl == c &&
+                    deadline - System.nanoTime() <= 0L &&
+                    U.compareAndSwapLong(this, CTL, c, prevctl))
+                    return false;                     // shrink pool
+            }
+        }
+        return true;
+    }
+
+```
+
