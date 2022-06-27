@@ -176,7 +176,12 @@
             }
             if (ws == null)        // 什么情况？fjp处于为Stared的状态或者已经terminated
                 break;
-            if (ws.length <= (i = sp & SMASK))         // terminated
+            /**
+            * static final int SMASK        = 0xffff; 
+            * sp:是ctl中的低32位
+            * sp & SMASK 也就是32位中的符号位置为0,然后取ctl中低16位的值,直白点就是idle线程所对应的wqs索引
+            */
+            if (ws.length <= (i = sp & SMASK))         
                 break;
             if ((v = ws[i]) == null)                   // terminating
                 break;

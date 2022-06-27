@@ -218,6 +218,9 @@
               	*  ~SCANNING=1111 1111 1111 1111 1111 1111 1111 1110
               	*  本质,将该wq的scanState设置为偶数(scanState的组成部就包括了wqs中的index)，偶数的index表示为外部队列,也将符号位置为1,也就是 INACTIVE
               	*  变相把该队列标记为忙碌状态
+              	*  猜想: 在FJP#signalWork()中会尝试去唤醒idle线程去执行任务
+              	*      >  int d = sp - v.scanState;   通过d==0进行判断
+                *      >  原因：可能在此时需要该工作线程需要执行任务，同时也需要从外部队列转移任务等
               	*/
                 scanState &= ~SCANNING; // mark as busy
               	// 执行任务
@@ -226,9 +229,9 @@
               	// 执行本地任务。为何执行本地任务？考虑一个问题：谁能往当前线程的工作队列里放任务？当前线程在执行FJT时往自己队列里放了任务，也只有当前线程才能往array任务数组里放任务
                 execLocalTasks();
                 ForkJoinWorkerThread thread = owner;
-                 // nsteals代表了当前线程总的偷取的任务数量。由于符号限制，所以检查是否发生符号溢出 
+                 // nsteals代表了当前线程总的窃取的任务数量。由于符号限制，所以检查是否发生符号溢出 
                 if (++nsteals < 0)     
-                    //  // 当前线程32位计数值达到饱和，那么将其加到FJP的全局变量的64位计数器中，并且清零计数值 nsteals
+                    // 当前线程32位计数值达到饱和，那么将其加到FJP的全局变量的64位计数器中，并且清零计数值 nsteals
                     transferStealCount(pool);
                 scanState |= SCANNING;  // 任务执行完成，恢复扫描状态
                 if (thread != null)
