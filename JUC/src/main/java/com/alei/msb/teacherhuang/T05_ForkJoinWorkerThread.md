@@ -247,7 +247,7 @@
         // 日常判空 , 判断fjp是否处于待结束状态
         if (w == null || w.qlock < 0) 
             return false;
-        //等待自选数
+        //等待自旋数
         for (int pred = w.stackPred, spins = SPINS, ss;;) {
             if ((ss = w.scanState) >= 0)
                 break;
@@ -267,13 +267,25 @@
            // 等待核心
             else if (!Thread.interrupted()) {
                 long c, prevctl, parkTime, deadline;
+              	// 最高16位 & 最大并行度
                 int ac = (int)((c = ctl) >> AC_SHIFT) + (config & SMASK);
+              	// ac不会小于0
+                // ac==0?当当前线程为最后一个空闲线程时就会出现ac==0
+              	/**
+              	* 最后一个空闲线程时?: 在scan()时会对空闲线程进行标记处理
+              	* ac==0，以最大并行度为8举例,且当前线程为最后一个空闲线程
+              	* 最高16位：1111 1111 1111 1000: 表示当前已经没有活跃线程了
+              	* config： 0000 0000 0000 1000
+              	* 
+              	*/
                 if ((ac <= 0 && tryTerminate(false, false)) ||
                     (runState & STOP) != 0)           // pool terminating
                     return false;
-                if (ac <= 0 && ss == (int)c) {        // is last waiter
+                if (ac <= 0 && ss == (int)c) {
+                  	// 空闲线程栈的栈顶
                     prevctl = (UC_MASK & (c + AC_UNIT)) | (SP_MASK & pred);
-                    int t = (short)(c >>> TC_SHIFT);  // shrink excess spares
+                    int t = (short)(c >>> TC_SHIFT); 
+                    // 至少保证有3个线程，如果fjp存在三个线程就可以将当前线程进行释放，因为ss=(int)c表示当前fjp状态稳定，就干脆释放一些资源。而且也能保证线程的活性
                     if (t > 2 && U.compareAndSwapLong(this, CTL, c, prevctl))
                         return false;                 // else use timed wait
                     parkTime = IDLE_TIMEOUT * ((t >= 0) ? 1 : 1 - t);
@@ -299,5 +311,6 @@
         return true;
     }
 
+1111 1111 1111 1001		1111 1111 1111 1010		1000 0000 0000 0000		0000 0000 0000 0011
 ```
 
