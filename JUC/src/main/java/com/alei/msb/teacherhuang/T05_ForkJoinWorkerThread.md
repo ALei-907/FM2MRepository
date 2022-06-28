@@ -277,10 +277,15 @@
               	* 最高16位：1111 1111 1111 1000: 表示当前已经没有活跃线程了
               	* config： 0000 0000 0000 1000
               	* 
+              	* 既然为最后一个活跃线程，那就尝试进行结束
               	*/
                 if ((ac <= 0 && tryTerminate(false, false)) ||
                     (runState & STOP) != 0)           // pool terminating
                     return false;
+                /**
+                * ss= (int)c: ss是当前栈顶wq，其实是标记空闲线程。因为wq与工作线程互相持有引用
+                * 					  就是判断判断当前线程是否为最后一个空闲线程
+                */
                 if (ac <= 0 && ss == (int)c) {
                   	// 空闲线程栈的栈顶
                     prevctl = (UC_MASK & (c + AC_UNIT)) | (SP_MASK & pred);
