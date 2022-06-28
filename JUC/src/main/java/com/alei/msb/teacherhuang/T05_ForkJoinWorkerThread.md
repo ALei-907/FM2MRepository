@@ -287,7 +287,7 @@
                 * 					  就是判断判断当前线程是否为最后一个空闲线程
                 */
                 if (ac <= 0 && ss == (int)c) {
-                  	// 空闲线程栈的栈顶
+                  	// 当前空闲线程栈顶的下一个线程，是准备还原栈顶线程的准备操作  
                     prevctl = (UC_MASK & (c + AC_UNIT)) | (SP_MASK & pred);
                     int t = (short)(c >>> TC_SHIFT); 
                     // 至少保证有3个线程，如果fjp存在三个线程就可以将当前线程进行释放，因为ss=(int)c表示当前fjp状态稳定，就干脆释放一些资源。而且也能保证线程的活性
@@ -300,13 +300,18 @@
                     prevctl = parkTime = deadline = 0L;
                 Thread wt = Thread.currentThread();
                 U.putObject(wt, PARKBLOCKER, this);   // emulate LockSupport
+                // 设置当前该队列阻塞在哪个线程上
                 w.parker = wt;
+                // 当前ctl没有被人改变过，该wq也没被改变。就进行阻塞
                 if (w.scanState < 0 && ctl == c)      // recheck before park
                     U.park(false, parkTime);
+              	// 被唤醒之后，就清空标识字段
                 U.putOrderedObject(w, QPARKER, null);
                 U.putObject(wt, PARKBLOCKER, null);
+              	// 如果wq状态可用，那就退出即可
                 if (w.scanState >= 0)
                     break;
+                // 设置了阻塞时间，ctl没有被改变过，并且超时了，就进行收缩线程池
                 if (parkTime != 0L && ctl == c &&
                     deadline - System.nanoTime() <= 0L &&
                     U.compareAndSwapLong(this, CTL, c, prevctl))
