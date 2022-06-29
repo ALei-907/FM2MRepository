@@ -34,21 +34,36 @@
             if (!enable)
                 return false;
           	// enable = true : 通过cas的方式为fjp设置shutDown标识位
-            rs = lockRunState();                  
+            rs = lockRunState();
+            // 去除RSLOCK标识，加上SHUTDOWN标识位
+          	// SHUTDOWN标识位小于0,因为externalSubmit()不再接受新的任务了，但是scan()仍在继续
             unlockRunState(rs, (rs & ~RSLOCK) | SHUTDOWN);
         }
-				
+				/**
+				* 线程池状态处于SHUTDOWN，没有设置STOP标志
+				*/
         if ((rs & STOP) == 0) {
           	/**
           	*  forkJoinPool.shutdown(); 		now=false
             *  forkJoinPool.shutdownNow();	now=true
           	*/
+          	// 若没有设置立即无条件结束线程池，那么需要静默状态，看看所有线程是否都是空闲的
             if (!now) {                           // check quiescence
+              	// 重复检测，直到FJP稳定
                 for (long oldSum = 0L;;) {        // repeat until stable
                     WorkQueue[] ws; WorkQueue w; int m, b; long c;
                     long checkSum = ctl;
+                  	// AC > 0，说明仍然有活跃线程,直接返回即可
+                  	/**
+                  	* 假设最大并行度为8:   0000 0000 0000 0000 0000 0000 0000 1000
+                  	* 存在1个活跃线程:     1111 1111 1111 1111 1111 1111 1111 1001	
+                  	* (int)(checkSum >> AC_SHIFT) + (config & SMASK) = 1 大于0
+                  	* 存在0个活跃线程:		  1111 1111 1111 1111 1111 1111 1111 1000
+                  	* (int)(checkSum >> AC_SHIFT) + (config & SMASK) = 0 等于0
+                  	*/
                     if ((int)(checkSum >> AC_SHIFT) + (config & SMASK) > 0)
                         return false;             // still active workers
+                  	// wqs仍然没有初始化，那也直接结束即可
                     if ((ws = workQueues) == null || (m = ws.length - 1) <= 0)
                         break;                    // check queues
                     for (int i = 0; i <= m; ++i) {
