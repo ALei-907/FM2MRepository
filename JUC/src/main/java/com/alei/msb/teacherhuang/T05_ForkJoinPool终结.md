@@ -75,6 +75,8 @@
                             }
                             checkSum += b;
                             if ((i & 1) == 0)
+                              	// ForkJoinPool#scan(): 将wq置为无效时会进行判断。并且如果<0就会退出扫描
+                              	// ForkJoinPool#awaitWork(): 如果w.lock<0,也会退出判断,快速进入ForkJoinPool#deregisterWorker()
                                 w.qlock = -1;     // try to disable external
                         }
                     }
