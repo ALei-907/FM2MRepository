@@ -30,4 +30,16 @@ public class HelloController {
         helloService.counterIncr();
         return "Hello " + clientName;
     }
+
+    @GetMapping("/gaugeIncr")
+    public String gaugeIncr() {
+        helloService.gaugeIncr();
+        return "gaugeIncr";
+    }
+
+    @GetMapping("/gaugeDecr")
+    public String gaugeDecr() {
+        helloService.gaugeDecr();
+        return "gaugeDecr";
+    }
 }
