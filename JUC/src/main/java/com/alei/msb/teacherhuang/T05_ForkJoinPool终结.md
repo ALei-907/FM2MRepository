@@ -66,17 +66,24 @@
                   	// wqs仍然没有初始化，那也直接结束即可
                     if ((ws = workQueues) == null || (m = ws.length - 1) <= 0)
                         break;                    // check queues
+                  	// 遍历所有队列：包括外部提交队列，内部工作队列
                     for (int i = 0; i <= m; ++i) {
                         if ((w = ws[i]) != null) {
-                            if ((b = w.base) != w.top || w.scanState >= 0 ||
-                                w.currentSteal != null) {
+                            if ((b = w.base) != w.top || // 队列仍然存在任务
+                                w.scanState >= 0 ||			 // 队列处于工作状态
+                                w.currentSteal != null   // 正在执行任务 -> workQueue.runTask()
+                               ) {
+                              	// 唤醒INACTIVE线程，尽快完成任务
                                 tryRelease(c = ctl, ws[m & (int)c], AC_UNIT);
+                              	// 由于还存在待执行的任务，所以直接返回
                                 return false;     // arrange for recheck
                             }
+                          	// 计算校验和
                             checkSum += b;
                             if ((i & 1) == 0)
-                              	// ForkJoinPool#scan(): 将wq置为无效时会进行判断。并且如果<0就会退出扫描
-                              	// ForkJoinPool#awaitWork(): 如果w.lock<0,也会退出判断,快速进入ForkJoinPool#deregisterWorker()
+                             // ForkJoinPool#scan(): 将wq置为无效时会进行判断。并且如果<0就会退出扫描
+                             // ForkJoinPool#awaitWork(): 如果w.lock<0,也会退出判断,快速进入ForkJoinPool#deregisterWorker()
+                             // 禁用该任务队列
                                 w.qlock = -1;     // try to disable external
                         }
                     }
