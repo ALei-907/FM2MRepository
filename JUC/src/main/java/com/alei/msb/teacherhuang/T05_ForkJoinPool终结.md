@@ -87,35 +87,45 @@
                                 w.qlock = -1;     // try to disable external
                         }
                     }
+                  	// 经历2次遍历过程，如果队列处于稳定状态
                     if (oldSum == (oldSum = checkSum))
                         break;
                 }
             }
+          	// 当前线程处于稳定状态，即没有任务出入，直接将状态变为Stop
             if ((runState & STOP) == 0) {
                 rs = lockRunState();              // enter STOP phase
                 unlockRunState(rs, (rs & ~RSLOCK) | STOP);
             }
         }
-
+				// 此时进入Stop状态，开始将状态更改为terminate
         int pass = 0;                             // 3 passes to help terminate
         for (long oldSum = 0L;;) {                // or until done or stable
             WorkQueue[] ws; WorkQueue w; ForkJoinWorkerThread wt; int m;
             long checkSum = ctl;
+          	// 总工作线程数==0,即正好所有线程结束
             if ((short)(checkSum >>> TC_SHIFT) + (config & SMASK) <= 0 ||
-                (ws = workQueues) == null || (m = ws.length - 1) <= 0) {
+                (ws = workQueues) == null || (m = ws.length - 1) <= 0 // 队列不存在
+               ) {
+              	// 当前线程直接将线程改变状态即可
                 if ((runState & TERMINATED) == 0) {
                     rs = lockRunState();          // done
                     unlockRunState(rs, (rs & ~RSLOCK) | TERMINATED);
+                  	// 可知: awaitTerminate(),等待线程池池终结是通过this对象进行阻塞
                     synchronized (this) { notifyAll(); } // for awaitTermination
                 }
                 break;
             }
+          	// 有线程且队列存在.那么遍历每一个wq，只处理wq存在的队列
             for (int i = 0; i <= m; ++i) {
                 if ((w = ws[i]) != null) {
                     checkSum += w.base;
+                  	// 直接禁用
                     w.qlock = -1;                 // try to disable
                     if (pass > 0) {
+                      	// pass=1，第一次循环，关闭wq状态
                         w.cancelAll();            // clear queue
+                      	// 响应中断，让线程快速结束
                         if (pass > 1 && (wt = w.owner) != null) {
                             if (!wt.isInterrupted()) {
                                 try {             // unblock join
