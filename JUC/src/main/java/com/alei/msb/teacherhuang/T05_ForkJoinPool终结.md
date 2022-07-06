@@ -143,6 +143,7 @@
                 oldSum = checkSum;
                 pass = 0;
             }
+          	// why: 上面有一个步骤是通过中断来终结线程,但如果业务线程响应中断的方式是不处理,那就强制退出该方法，因为设置了qlock=-1,所以也不会有新的任务加入，只需要交给awaitTerminate()来处理
             else if (pass > 3 && pass > m)        // can't further help
                 break;
             else if (++pass > 1) {                // try to dequeue
@@ -154,5 +155,42 @@
         return true;
     }
 
+```
+
+### ForkJoinPool#awaitTermination()
+
+```java
+    public boolean awaitTermination(long timeout, TimeUnit unit)
+        throws InterruptedException {
+      	// 响应中断
+        if (Thread.interrupted())
+            throw new InterruptedException();
+      	// common线程池是不能够关闭的，所以直接调用awaitQuiescence，然后返回false
+        if (this == common) {
+            awaitQuiescence(timeout, unit);
+            return false;
+        }
+        long nanos = unit.toNanos(timeout);
+      	// 已经终结了，就直接返回
+        if (isTerminated())
+            return true;
+        if (nanos <= 0L)
+            return false;
+      	// 计算等待截止时间
+        long deadline = System.nanoTime() + nanos;
+      	// 阻塞在this FJP对象的监视器锁中，直到状态变为TERMAINATED然后被唤醒
+        synchronized (this) {
+            for (;;) {
+                if (isTerminated())
+                    return true;
+              	// 这个地方可能存在一个现象：如果工作任务中不响应中断可能会有死循环的现象
+                if (nanos <= 0L)
+                    return false;
+                long millis = TimeUnit.NANOSECONDS.toMillis(nanos);
+                wait(millis > 0L ? millis : 1L);
+                nanos = deadline - System.nanoTime();
+            }
+        }
+    }
 ```
 
