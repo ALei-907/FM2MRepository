@@ -160,7 +160,8 @@
 ### ForkJoinPool#awaitTermination()
 
 ```java
-    public boolean awaitTermination(long timeout, TimeUnit unit)
+// 更多的作用是等待指定的时间 让线程继续执行任务  
+public boolean awaitTermination(long timeout, TimeUnit unit)
         throws InterruptedException {
       	// 响应中断
         if (Thread.interrupted())
