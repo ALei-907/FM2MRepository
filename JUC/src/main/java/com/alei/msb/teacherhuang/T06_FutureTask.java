@@ -24,6 +24,10 @@ public class T06_FutureTask {
         // 判断是否完成
         if (!submit.isDone()) {
             // 如果任务执行了,中断就行
+            // interrupt是通过线程中断标识位来进行操作
+            /**
+             * 线程池中对Interrupt进行了响应操作,但如果在业务线程中对interrupt进行了置位操作,就有可能让线程池处于循环取任务的状态
+             */
             submit.cancel(true);
         }
     }
