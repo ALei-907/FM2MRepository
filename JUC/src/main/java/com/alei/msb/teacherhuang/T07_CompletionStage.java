@@ -18,10 +18,14 @@ public class T07_CompletionStage {
          * 三个核心的函数式接口，supply,consumer,function
          * CompletionStage的异步和同步: 异步代表stage1和stage2分别由不同的线程来执行
          *                            同步代表stage1和stage2由同一个线程来执行
+         *
+         * 当Stage执行完成后,会对{@link java.util.concurrent.CompletableFuture.Completion}进行弹栈依次处理
+         *                 如果弹出的元素还有栈元素，就继续进行递归处理
          */
-
         thenRun();
         themCombine();
+
+
 
     }
 
