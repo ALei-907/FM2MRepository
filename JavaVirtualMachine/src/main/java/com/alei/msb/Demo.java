@@ -20,6 +20,9 @@ public class Demo {
      * @param args
      */
     public static void main(String[] args) {
+        /**
+         * 程序计数器,线程栈,本地方法栈,方法区,常量池
+         */
         int i=0;
     }
     /**
