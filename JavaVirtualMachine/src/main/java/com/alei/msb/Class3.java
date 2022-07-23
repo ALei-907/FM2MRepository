@@ -7,7 +7,6 @@ package com.alei.msb;
  */
 public class Class3 {
     /**
-     *
      *  void func(){
      *      int a=1;
      *  }
@@ -22,5 +21,9 @@ public class Class3 {
      *      movl    $1, -4(%rbp)    // 将前一个4byte的栈帧设置为1
      *      popq    %rbp            // 栈顶先右边回退,将此时栈底的值弹出[恢复栈帧]
      *      ret
+     */
+
+    /**
+     * rax
      */
 }
