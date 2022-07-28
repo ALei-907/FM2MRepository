@@ -43,7 +43,7 @@ EXPOSE 7000。         # 将容器内部的7000端口对外暴露
   - 不对Dockerfile产生影响
 - WORKDIR /path - 相当于cd，如果文件夹不存在就进行mkdir，cd
 - ADD & COPY - 效果一致
-  - ADD test.gar.gz 自动解压缩
+  - ADD Test.gar.gz 自动解压缩
 - ENV ： 设置环境变量
   - ENV WORK_PATH="/tmp"
   - ENV WORK_PATH /tmp

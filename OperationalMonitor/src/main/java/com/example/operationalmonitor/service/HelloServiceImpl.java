@@ -43,17 +43,12 @@ public class HelloServiceImpl {
         // meterRegistry.gauge(GaugeName, 1); // 这种方式就只能设置一次，一旦设置,后续就无法浮动修改
         meterRegistry.gauge(GaugeName, atomicInteger,AtomicInteger::get);
         System.out.println("Lewis-Gauge: " + i);
-
     }
-
-    static final Gauge inprogressRequests = Gauge.build()
-            .name("inprogress_requests").help("Inprogress requests.").register();
 
     public void gaugeDecr() {
         int i = atomicInteger.decrementAndGet();
 
         meterRegistry.gauge(GaugeName, atomicInteger,AtomicInteger::get);
         System.out.println("Lewis-Gauge: " + i);
-
     }
 }
