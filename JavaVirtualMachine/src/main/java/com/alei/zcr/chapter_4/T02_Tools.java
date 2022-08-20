@@ -10,6 +10,7 @@ public class T02_Tools {
          * jps [options] [hostid]: 列出正在进行中的虚拟机进程
          * jstat [options vmid interval s[ms] count]: jstat -gc 2764 250 20
          *                                            查询2764进程的垃圾收集情况 以250msd的查询频率 查询20次
+         * jstack [options] vmid: 生成虚拟机当前时刻的线程快照
          */
     }
 }
