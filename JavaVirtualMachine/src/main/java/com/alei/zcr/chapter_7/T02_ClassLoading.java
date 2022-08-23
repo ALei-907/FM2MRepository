@@ -18,9 +18,11 @@ public class T02_ClassLoading {
      * 卸载:
      */
     public static void main(String[] args) {
+        String name="abc.d";
+        System.out.println(name.substring(name.lastIndexOf('.')+1));
         // eg1();
         // eg2();
-        eg3();
+        // eg3();
     }
 
     public static void eg3() {
