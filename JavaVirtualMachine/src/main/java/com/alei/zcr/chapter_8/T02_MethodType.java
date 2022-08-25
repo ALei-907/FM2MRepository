@@ -17,9 +17,13 @@ public class T02_MethodType {
         // 按照Java语言规则,方法的第一个参数是隐式的接受者(this),所以bindTo的参数为obj
         MethodHandle printlnMethod = MethodHandles.lookup().findVirtual(obj.getClass(), "println", mt).bindTo(obj);
         printlnMethod.invokeExact("MethodType");
+
+        /**
+         * Java是基于栈的指令集
+         */
     }
 
-     static class A {
+    static class A {
         public void println(String s) {
             System.out.println(s);
         }
