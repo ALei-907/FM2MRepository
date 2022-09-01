@@ -26,6 +26,18 @@ public class T01_JavacCompiler {
      */
 
     public static void main(String[] args) {
+        /**
+         * 后端编译器: C1,C2编译器[对应客户端,服务端编译器],将Class文件转为本地机器码
+         * 编译分成: 0 采用解释器执行
+         *          1 开启客户端编译器,但不开启性能指标
+         *          2 开启客户端编译器,开启对性能消耗较少的指标
+         *          3 开启客户端编译器,开启全部性能指标
+         *          4 开启服务端编译器
+         *
+         * 客户端编译器的三个阶段
+         *          1: 将Class文件转为中间代码表示
+         *          TODO
+         */
 
     }
     // private void m1(List<Integer> list) {
