@@ -40,11 +40,4 @@ public class T01_JavacCompiler {
          */
 
     }
-    // private void m1(List<Integer> list) {
-    // }
-    //
-    // private int m1(List<String> list) {
-    //     return  1;
-    // }
-
 }

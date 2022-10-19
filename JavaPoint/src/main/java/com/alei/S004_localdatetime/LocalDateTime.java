@@ -2,6 +2,7 @@ package com.alei.S004_localdatetime;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 
 /**
@@ -23,5 +24,11 @@ public class LocalDateTime {
         long max = java.time.LocalDateTime.of(LocalDate.now(), LocalTime.MAX).toInstant(ZoneOffset.of("+8")).toEpochMilli();
 
         System.out.println(milliSecond.equals(System.currentTimeMillis())); //true
+
+        java.time.LocalDateTime system = java.time.LocalDateTime.now();
+        long l = system.toInstant(ZoneId.systemDefault().getRules().getOffset(system)).toEpochMilli();
+        System.out.println(l);
+        System.out.println(System.currentTimeMillis());
+
     }
 }

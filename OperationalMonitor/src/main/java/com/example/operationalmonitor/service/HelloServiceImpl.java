@@ -6,18 +6,18 @@ import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.Counter;
 import io.prometheus.client.Gauge;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * @Author LeiLiMin
- * @Description:
- * @date: 2022/6/2
+ * @author LeiLiMin
  */
 @Service
 public class HelloServiceImpl {
 
+    @Value("")
     @Autowired
     MeterRegistry meterRegistry;
 
@@ -33,9 +33,9 @@ public class HelloServiceImpl {
         System.out.println("invoke Counter#inc");
     }
 
-    private static String GaugeName = "Lewis-Gauge";
+    private static final String GaugeName = "Lewis-Gauge";
 
-    private AtomicInteger atomicInteger = new AtomicInteger(0);
+    private final AtomicInteger atomicInteger = new AtomicInteger(0);
 
     public void gaugeIncr() {
         int i = atomicInteger.incrementAndGet();
