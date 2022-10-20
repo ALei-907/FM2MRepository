@@ -13,6 +13,7 @@
         <module>JavaUtils</module>
         <module>JUC</module>
         <module>HFDesignPatterns</module>
+        <module>Book_OnJava</module>
     </modules>
 
     <properties>
