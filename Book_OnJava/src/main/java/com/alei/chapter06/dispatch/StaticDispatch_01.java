@@ -7,24 +7,24 @@ import java.io.Serializable;
  * @date: 2022/10/23
  */
 public class StaticDispatch_01 {
-    // public void showChar(char c){
-    //     System.out.println("Is char c");
-    // }
-    // public void showChar(short s){
-    //     System.out.println("Is short s");
-    // }
-    // public void showChar(int i){
-    //     System.out.println("Is int i");
-    // }
-    // public void showChar(Character character){
-    //     System.out.println("Is character ch");
-    // }
-    // public void showChar(Serializable serializable){
-    //     System.out.println("Is serializable serial");
-    // }
-    // public void showChar(Comparable<Character> comparable){
-    //     System.out.println("Is comparable comparable");
-    // }
+    public void showChar(char c){
+        System.out.println("Is char c");
+    }
+    public void showChar(short s){
+        System.out.println("Is short s");
+    }
+    public void showChar(int i){
+        System.out.println("Is int i");
+    }
+    public void showChar(Character character){
+        System.out.println("Is character ch");
+    }
+    public void showChar(Serializable serializable){
+        System.out.println("Is serializable serial");
+    }
+    public void showChar(Comparable<Character> comparable){
+        System.out.println("Is comparable comparable");
+    }
     public void showChar(char... chars){
         System.out.println("Is chars chars");
     }
@@ -38,7 +38,6 @@ public class StaticDispatch_01 {
 
     public static void main(String[] args) {
         StaticDispatch_01 staticDispatch_01 = new StaticDispatch_01();
-        // char -> int -> character -> Serializable | Comparable<Character> -> char... chars -> Character... chars -> int... ints
         /**
          * 依次向下注释重载方法时的输出
          * char: 实参类型与形参类型完全匹配
