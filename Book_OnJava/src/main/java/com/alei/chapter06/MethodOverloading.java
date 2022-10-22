@@ -28,7 +28,7 @@ public class MethodOverloading {
         // char的特殊在于,char在方法重载的调用中向上转型为int
         byte a = 'a';
         f1(a);
-
     }
 
 }
+
