@@ -14,6 +14,7 @@
         <module>JUC</module>
         <module>HFDesignPatterns</module>
         <module>Book_OnJava</module>
+        <module>Book_JVM3</module>
     </modules>
 
     <properties>
