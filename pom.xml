@@ -15,6 +15,7 @@
         <module>HFDesignPatterns</module>
         <module>Book_OnJava</module>
         <module>Book_JVM3</module>
+        <module>Java_QA</module>
     </modules>
 
     <properties>
