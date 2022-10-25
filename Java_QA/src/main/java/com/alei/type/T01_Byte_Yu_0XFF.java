@@ -6,7 +6,8 @@ package com.alei.type;
  */
 public class T01_Byte_Yu_0XFF {
     public static void main(String[] args) {
-        char[] chars = args[0].toCharArray();
+        String temp = "你好呀";
+        char[] chars = temp.toCharArray();
         byte[] changeAfter = new byte[chars.length];
         int index = 0;
         for (char element : chars) {
@@ -20,10 +21,13 @@ public class T01_Byte_Yu_0XFF {
              *                            小端=0000 0000
              *      通过0XFF转 byte        大端=小端=0000 0001
              */
+            System.out.println(Integer.toBinaryString(element >> 8 & 0XFF));
             changeAfter[index] = (byte) (element >> 8 & 0XFF);
             index++;
         }
+        System.out.println("========");
         for (byte b : changeAfter) {
+            System.out.println(Integer.toBinaryString(b));
             System.out.println(b);
         }
     }
