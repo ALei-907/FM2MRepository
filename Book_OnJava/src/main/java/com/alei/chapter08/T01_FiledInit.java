@@ -1,4 +1,4 @@
-package com.alei.chapter08.group;
+package com.alei.chapter08;
 
 import java.util.Objects;
 
