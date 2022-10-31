@@ -1,15 +1,18 @@
 package com.alei.decorator;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.FutureTask;
+
+import com.alei.openapi.sensorsbi.utils.DefaultThreadFactory;
+
+import java.util.concurrent.*;
 
 /**
  * @Author LeiLiMin
- * @Description: {@link java.util.concurrent.AbstractExecutorService#newTaskFor(Callable)} w}
+ *
  * @date: 2022/5/20
  */
+// @Description: {@link java.util.concurrent.AbstractExecutorService#newTaskFor(Callable)} w}
 public class T01_FutureTask {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         /**
          * 运用了装饰者模式
          *
@@ -20,7 +23,7 @@ public class T01_FutureTask {
         FutureTask<Integer> ft = new FutureTask<>(() -> {
             System.out.println("My is FutureTask!");
         }, null);
-
-
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2,4,100L, TimeUnit.MILLISECONDS,new LinkedBlockingQueue<>(),new DefaultThreadFactory("Lewis"));
+        threadPoolExecutor.execute(ft);
     }
 }

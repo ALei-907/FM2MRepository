@@ -2,34 +2,21 @@ package com.example.operationalmonitor.controller;
 
 import com.example.operationalmonitor.service.HelloServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @Author LeiLiMin
- * @Description:
  * @date: 2022/5/7
  */
 @RestController
 @RequestMapping("/v1")
 public class HelloController {
     @Autowired
+    @Qualifier("helloServiceImpl")
     private HelloServiceImpl helloService;
-
-    /**
-     * Grafana: https://grafana.com/docs/grafana/latest/installation/mac/
-     * 安装配置grafana
-     *
-     * @param clientName
-     * @return
-     */
-    @GetMapping("/Hello")
-    public String hello(@RequestParam String clientName) {
-        helloService.counterIncr();
-        return "Hello " + clientName;
-    }
 
     @GetMapping("/gaugeIncr")
     public String gaugeIncr() {
@@ -41,16 +28,5 @@ public class HelloController {
     public String gaugeDecr() {
         helloService.gaugeDecr();
         return "gaugeDecr";
-    }
-
-    @GetMapping("/exception")
-    public String exception() {
-        int i = 1 / 0;
-        return "exception";
-    }
-
-    @GetMapping("/hello")
-    public String hello() {
-        return "\n hello";
     }
 }

@@ -1,8 +1,6 @@
 package com.alei.observer.subject;
 
 import com.alei.observer.Observer;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,8 +10,6 @@ import java.util.Map;
  * @Description: Subject下的具体一族
  * @date: 2022/5/15
  */
-@Getter
-@Setter
 public abstract class DefineSubject implements Subject {
     /**
      * Observer集合,集中管理
@@ -23,6 +19,22 @@ public abstract class DefineSubject implements Subject {
     private String subjectName;
 
     public DefineSubject(String subjectName) {
+        this.subjectName = subjectName;
+    }
+
+    public Map<Observer, Observer> getObserverMap() {
+        return observerMap;
+    }
+
+    public void setObserverMap(Map<Observer, Observer> observerMap) {
+        this.observerMap = observerMap;
+    }
+
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public void setSubjectName(String subjectName) {
         this.subjectName = subjectName;
     }
 }
