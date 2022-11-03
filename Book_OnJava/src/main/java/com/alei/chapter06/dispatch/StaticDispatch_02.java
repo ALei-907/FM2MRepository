@@ -27,7 +27,6 @@ public class StaticDispatch_02 {
      * 变量Father:实际类型为Father,静态类型为Father
      * 静态类型为编译期间虚拟机就可以知道的信息,所以案例中方法的接受者是确定的(Executor),方法的参数类型也是确定的(Father)
      * 所以虚拟机在编译期间是根据参数的静态类型来选择重载版本的
-     * @param args
      */
     public static void main(String[] args) {
         Father son = new Son();
