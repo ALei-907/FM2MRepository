@@ -21,7 +21,7 @@ public class T02_FieldExtends {
 }
 
 class Super {
-    int field = 0;
+    int field = 2;
 
     public int getField() {
         return field;
