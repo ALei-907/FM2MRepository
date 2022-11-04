@@ -7,6 +7,9 @@ package com.alei.chapter09;
 public class T03_InvokeBeforeInit {
     public static void main(String[] args) {
         T03Sub test = new T03Sub();
+        test.printI();
+        // 向上转型,但是丢失了子类的特别行为
+        ((T03Sub)test).finalM();
     }
 }
 
