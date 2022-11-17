@@ -9,6 +9,9 @@ public class T01_PointerThis {
         PointerThis pointerThis = new PointerThis();
         // 使用.new语法来创建内部类
         PointerThis.InnerClass innerClass = pointerThis.new InnerClass();
+
+        // 为什么如下方式不行,因为非static内部类,实例化的时候需要与外围对象建立关联,所以必须得使用外围对象来实例话内部对象
+        // PointerThis.InnerClass innerClass0= new PointerThis.InnerClass();
     }
 
 
