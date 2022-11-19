@@ -44,6 +44,10 @@ public class RedisClient {
         return jedisClient.eval(LuaConstant.H_GET_SET, keys, args);
     }
 
+    public Object eval(String script, List<String> keys, List<String> args) {
+        return jedisClient.eval(script, keys, args);
+    }
+
 
     // /**
     //  * 没有任何参数的Lua脚本

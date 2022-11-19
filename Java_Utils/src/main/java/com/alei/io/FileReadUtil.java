@@ -20,7 +20,7 @@ public class FileReadUtil {
     public static Map<String, String> convertToMapByPp(String path) throws IOException {
         try (InputStream in = Thread.currentThread(). // 当前线程
                 getContextClassLoader().         // 获取类加载器
-                getResourceAsStream(path);       // 加载配置文件
+                getResourceAsStream(path)      // 加载配置文件
         ) {
             Properties pt = new Properties();
             pt.load(in);
