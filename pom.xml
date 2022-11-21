@@ -17,6 +17,7 @@
         <module>Book_JVM3</module>
         <module>Java_QA</module>
         <module>Ops_Prometheus</module>
+        <module>Tools_Java</module>
     </modules>
 
     <properties>
