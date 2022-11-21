@@ -21,12 +21,16 @@ public class RedisClientTest {
             public void run() {
                 ArrayList<String> key = new ArrayList<>();
                 key.add("slotsdata:10016:h:s:jackpotPool");
-                key.add("slotsdata:10016:h:s:bonusPool");
+                key.add("slotsdata:10016:h:s:jackpotexpire");
                 ArrayList<String> arg = new ArrayList<>();
+                arg.add("jackpot5");
                 arg.add(String.valueOf(System.currentTimeMillis()));
+                arg.add(String.valueOf(1));
+                arg.add(String.valueOf(3));
+
                 System.out.println(redisClient.eval(LuaConstant.SLOTS_10016_INCR_JP_POOL, key, arg));
             }
-        }, 0,30, TimeUnit.SECONDS);
+        }, 0, 1, TimeUnit.SECONDS);
 
     }
 }
