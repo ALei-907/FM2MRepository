@@ -20,6 +20,10 @@
 
 #### 通过JVM参数启动
 
+
+
+
+
 **-XX:StartFlightRecording**
 
 | 配置key          | 默认值      | 说明                                                         |
