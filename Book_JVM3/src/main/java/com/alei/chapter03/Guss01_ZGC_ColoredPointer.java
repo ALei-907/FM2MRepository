@@ -10,7 +10,6 @@ import java.io.IOException;
  */
 public class Guss01_ZGC_ColoredPointer {
     /**
-     * TODO:
      * resource: https://tech.meituan.com/2020/08/06/new-zgc-practice-in-meituan.html
      */
     /**
