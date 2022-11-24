@@ -76,4 +76,29 @@
          Stack depth: 65
     ```
 
-    
+### JMC-分析JFR
+
+**导入指南:** 文件 -> 打开文件
+
+#### 常见的Event
+
+* Garbage Collection: 查看GC详情
+
+* Old Object Sample: 查看老对象采样
+
+* Unsiged Long Flag Event: 通过Name为G1HeapRegionSize来查看Region大小
+
+* java Exception 和 java Error: 查看异常事件,但需要在default.jfr中开启配置
+
+  ```
+  在default.jfr中开启该配置: 默认是false
+  <event name="jdk.JavaExceptionThrow">
+    <setting name="enabled" control="enable-exceptions">true</setting>
+    <setting name="stackTrace">true</setting>
+  </event>
+  默认开启error的配置
+  <event name="jdk.JavaErrorThrow">
+    <setting name="enabled" control="enable-errors">true</setting>
+    <setting name="stackTrace">true</setting>
+  </event>
+  ```
