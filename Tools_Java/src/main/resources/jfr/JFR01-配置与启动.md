@@ -90,13 +90,13 @@
 
 * java Exception 和 java Error: 查看异常事件,但需要在default.jfr中开启配置
 
-  ```
-  在default.jfr中开启该配置: 默认是false
+  ```xml
+  <!-- 在default.jfr中开启该配置: 默认是false -->
   <event name="jdk.JavaExceptionThrow">
     <setting name="enabled" control="enable-exceptions">true</setting>
     <setting name="stackTrace">true</setting>
   </event>
-  默认开启error的配置
+  <!-- 默认开启error的配置 -->
   <event name="jdk.JavaErrorThrow">
     <setting name="enabled" control="enable-errors">true</setting>
     <setting name="stackTrace">true</setting>
