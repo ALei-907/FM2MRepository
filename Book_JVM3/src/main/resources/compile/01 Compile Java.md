@@ -3,6 +3,14 @@
 #### 前置准备:  [参考github.openjdk](https://github.com/openjdk/jdk/blob/master/doc/building.md#running-configure)
 
 * **BootJava：** 编译jdk需要一个预先存在的引导jdk,一般来说需要在本地环境上安装所需编译jdk版本-1的jdk,如果N-1尚未发布,可以使用N-2版本的JDK。`sudo apt-get install openjdk-<VERSION>-jdk`
+* **工具准备：**
+
+| 名称     | 命令                         |
+| -------- | ---------------------------- |
+| make     | Sudo apt-get install make    |
+| Autoconf | sudo apt-get install autocof |
+
+
 
 * **外部库：**
 
