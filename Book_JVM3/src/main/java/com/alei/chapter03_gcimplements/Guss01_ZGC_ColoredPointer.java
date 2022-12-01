@@ -1,8 +1,4 @@
-package com.alei.chapter03;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+package com.alei.chapter03_gcimplements;
 
 /**
  * @author LeiLiMin
