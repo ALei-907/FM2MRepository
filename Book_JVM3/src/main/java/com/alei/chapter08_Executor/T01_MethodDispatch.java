@@ -7,7 +7,9 @@ import java.util.Collection;
  * @date: 2022/12/5
  */
 public class T01_MethodDispatch {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+        System.out.println("I am begin ");
+        Thread.sleep(10*1000);
         A a = new B();
         // 1. b.getObj() => 因为子类重写了该方法a.getObj()的方法签名在子类中得到匹配
         System.out.println("实际调用: " + a.getObj() + " getObj()");
