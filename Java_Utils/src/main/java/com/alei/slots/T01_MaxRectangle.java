@@ -1,69 +1,191 @@
 package com.alei.slots;
 
-import lombok.Data;
 
-import java.util.Objects;
+import java.util.Deque;
+import java.util.LinkedList;
 
 /**
  * @author LeiLiMin
  * @date: 2022/12/6
  */
 public class T01_MaxRectangle {
-    private static int demo[][] = {
-            {1, 0, 0, 0, 0, 0, 0},
-            {0, 0, 1, 1, 1, 1, 0},
-            {0, 0, 1, 1, 1, 1, 0},
-            {0, 0, 0, 1, 1, 1, 0},
-            {0, 0, 0, 1, 1, 1, 0}
+    private static final int[][] matrix = {
+            {1, 1, 1, 1, 1},
+            {1, 1, 1, 0, 1},
+            {1, 1, 1, 0, 1},
+            {1, 0, 0, 1, 0}
     };
 
-    @Data
-    static class Rectangle {
-        private int x;  // 横轴
-        private int y;  // 纵轴
-
-        public int area() {
-            return x * y;
-        }
-
-        public Rectangle(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
-
-    private static Rectangle rectangles[][] = new Rectangle[demo.length][demo[0].length];
 
     public static void main(String[] args) {
-        int x = demo.length;    // 多少行
-        int y = demo[0].length; // 多少列
+        T01_MaxRectangle obj = new T01_MaxRectangle();
+        // System.out.println("LeetCode0,最大矩形面积:"+ obj.leetCode0(matrix));
 
-        Rectangle maxVal = new Rectangle(0, 0);
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
-                // 第一个方格=1
-                if (i == j && j == 1) {
-                    rectangles[i][j] = new Rectangle(1, 1);
-                    maxVal = rectangles[i][j].area() > maxVal.area() ? rectangles[i][j] : maxVal;
-                    continue;
+        // Slots10031解决方案
+        System.out.println("原始图谱: ");
+        obj.printGraph(matrix);
+        int[][] tagGraph = obj.slots10031(matrix);
+        System.out.println("结块图谱: ");
+        obj.printGraph(tagGraph);
+    }
+
+    private void printGraph(int[][] original) {
+        for (int[] ints : original) {
+            for (int anInt : ints) {
+                System.out.print(anInt + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    private int[][] resetTagGraph(int[][] original) {
+        int[][] tagGraph = new int[original.length][original[0].length];
+        for (int i = 0; i < original.length; i++) {
+            int[] ints = original[i];
+            for (int i1 = 0; i1 < ints.length; i1++) {
+                tagGraph[i][i1] = 0;
+            }
+        }
+        return tagGraph;
+    }
+
+    private int[][] slots10031(int[][] original) {
+        int[] curMax = slots10031GetMax(original);
+        assert curMax != null;
+
+        int[][] tagGraph = resetTagGraph(original);
+        while (curMax[curMax.length - 1] > 0) {
+            // 1.清空图谱
+            for (int i = 0; i < curMax[3]; i++) {
+                for (int i1 = 0; i1 < curMax[2]; i1++) {
+                    original[curMax[0] - i][curMax[1] - i1] = 0;
+                    tagGraph[curMax[0] - i][curMax[1] - i1] = curMax[curMax.length - 1];
                 }
+            }
+            curMax = slots10031GetMax(original);
+            assert curMax != null;
+        }
+        return tagGraph;
+    }
 
-                // 后续出现方格=1
-                if (demo[i][j] == 1) {
-                    Rectangle top = (i - 1 < 0) ? null : rectangles[i - 1][j];
-                    Rectangle left = (j - 1 < 0) ? null : rectangles[i][j - 1];
+    /**
+     * 根据bitMap求出最大矩形信息
+     *
+     * @param matrix bitMap
+     * @return [row, col, width, height, area]
+     */
+    private int[] slots10031GetMax(int[][] matrix) {
+        int row = matrix.length;
+        if (row == 0) {
+            return null;
+        }
+        int col = matrix[0].length;
 
-                    // 先行后列
-                    int topRow = Objects.isNull(top)?0:top.getX();
-                    int leftRow = Objects.isNull(left)?0:left.getX();
 
-                    int topCol = Objects.isNull(top)?0:top.getY();
-                    int leftCol = Objects.isNull(left)?0:left.getY();
-
+        // 1.求出每行每个矩阵连续的1
+        int[][] left = new int[row][col];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (matrix[i][j] == 1) {
+                    left[i][j] = (j == 0 ? 0 : left[i][j - 1]) + 1;
                 }
             }
         }
 
-        System.out.println(maxVal);
+        // 2.求最大矩形[row,col,width,height,area]
+        int[] maxVal = {-1, -1, -1, -1, -1};
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (left[i][j] > 0) {
+                    int cursor = i;
+                    int width = left[i][j];
+                    while ((cursor--) >= 0 && width != 0) {
+                        width = Math.min(width, left[cursor + 1][j]);
+                        int height = (i - cursor);
+                        int area = width * height;
+                        if (area > maxVal[4]) {
+                            maxVal[0] = i;
+                            maxVal[1] = j;
+                            maxVal[2] = width;
+                            maxVal[3] = height;
+                            maxVal[4] = area;
+                        }
+                    }
+                }
+            }
+        }
+        return maxVal;
     }
+
+
+    /**
+     * <a href="https://leetcode.cn/problems/maximal-rectangle/description/">LeetCode 85 题解</a>
+     */
+    // private int leetCode0(int[][] matrix){
+    //     int row = matrix.length;
+    //     if (row == 0) {
+    //         return 0;
+    //     }
+    //     int col = matrix[0].length;
+    //
+    //
+    //     // 1.求出每行每个矩阵连续的1
+    //     int[][] left = new int[row][col];
+    //     for (int i = 0; i < row; i++) {
+    //         for (int j = 0; j < col; j++) {
+    //             if (matrix[i][j] == 1) {
+    //                 left[i][j] = (j == 0 ? 0 : left[i][j - 1]) + 1;
+    //             }
+    //         }
+    //     }
+    //
+    //     // 2.求最大矩形[row,col,area]
+    //     int maxVal = 0;
+    //     for (int i = 0; i < row; i++) {
+    //         for (int j = 0; j < col; j++) {
+    //             if (left[i][j] > 0) {
+    //                 int cursor = i;
+    //                 int width = left[i][j];
+    //                 while ((cursor--) >= 0 && width != 0) {
+    //                     width = Math.min(width, left[cursor+1][j]);
+    //                     maxVal=Math.max(width * (i - cursor), maxVal);
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return maxVal;
+    //
+    //     // int ret = 0;
+    //     // for (int j = 0; j < col; j++) { // 对于每一列，使用基于柱状图的方法
+    //     //     int[] up = new int[row];
+    //     //     int[] down = new int[row];
+    //     //
+    //     //     Deque<Integer> stack = new LinkedList<Integer>();
+    //     //     for (int i = 0; i < row; i++) {
+    //     //         while (!stack.isEmpty() && left[stack.peek()][j] >= left[i][j]) {
+    //     //             stack.pop();
+    //     //         }
+    //     //         up[i] = stack.isEmpty() ? -1 : stack.peek();
+    //     //         stack.push(i);
+    //     //     }
+    //     //     stack.clear();
+    //     //     for (int i = row - 1; i >= 0; i--) {
+    //     //         while (!stack.isEmpty() && left[stack.peek()][j] >= left[i][j]) {
+    //     //             stack.pop();
+    //     //         }
+    //     //         down[i] = stack.isEmpty() ? row : stack.peek();
+    //     //         stack.push(i);
+    //     //     }
+    //     //
+    //     //     for (int i = 0; i < row; i++) {
+    //     //         int height = down[i] - up[i] - 1;
+    //     //         int area = height * left[i][j];
+    //     //         ret = Math.max(ret, area);
+    //     //     }
+    //     // }
+    //     // return ret;
+    //
+    // }
 }
+
