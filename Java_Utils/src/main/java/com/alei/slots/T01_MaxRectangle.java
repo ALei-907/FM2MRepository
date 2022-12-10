@@ -50,6 +50,11 @@ public class T01_MaxRectangle {
         return tagGraph;
     }
 
+    /**
+     * TODO: 不打印最终图谱,返回右下坐标信息链表
+     * @param original
+     * @return
+     */
     private int[][] slots10031(int[][] original) {
         int[] curMax = slots10031GetMax(original);
         assert curMax != null;
