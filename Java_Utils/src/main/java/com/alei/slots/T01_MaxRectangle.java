@@ -1,9 +1,6 @@
 package com.alei.slots;
 
 
-import java.util.Deque;
-import java.util.LinkedList;
-
 /**
  * @author LeiLiMin
  * @date: 2022/12/6
@@ -23,7 +20,7 @@ public class T01_MaxRectangle {
 
         // Slots10031解决方案
         System.out.println("原始图谱: ");
-        obj.printGraph(matrix);
+        obj.printGraph(T01_MaxRectangle.matrix);
         int[][] tagGraph = obj.slots10031(matrix);
         System.out.println("结块图谱: ");
         obj.printGraph(tagGraph);
@@ -52,8 +49,6 @@ public class T01_MaxRectangle {
 
     /**
      * TODO: 不打印最终图谱,返回右下坐标信息链表
-     * @param original
-     * @return
      */
     private int[][] slots10031(int[][] original) {
         int[] curMax = slots10031GetMax(original);
