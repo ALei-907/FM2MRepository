@@ -1,6 +1,9 @@
 package com.alei.S012_Collections;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * @author LeiLiMin
@@ -13,6 +16,7 @@ public class T01_List {
          */
         add();
         set();
+        genOrdedList();
     }
 
     public static void add(){
@@ -32,6 +36,19 @@ public class T01_List {
         list.set(1,-1);
         /* List Method Of set: [0, -1]  */
         System.out.println("List Method Of set: "+list);
+
+    }
+
+    /**
+     * 返回一个顺序生成的集合
+     */
+    public static void genOrdedList(){
+        /**
+         * 顺序生成元素: {@link IntStream#range(int, int)}
+         * 将元素转为保证类: {@link IntStream#boxed()}
+         */
+        List<Integer> gridIndexes = IntStream.range(0, 15).boxed().collect(Collectors.toList());
+        System.out.println(gridIndexes);
 
     }
 }
