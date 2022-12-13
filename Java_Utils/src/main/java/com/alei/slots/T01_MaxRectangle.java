@@ -1,6 +1,9 @@
 package com.alei.slots;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author LeiLiMin
  * @date: 2022/12/6
@@ -15,15 +18,25 @@ public class T01_MaxRectangle {
 
 
     public static void main(String[] args) {
-        T01_MaxRectangle obj = new T01_MaxRectangle();
-        // System.out.println("LeetCode0,最大矩形面积:"+ obj.leetCode0(matrix));
-
-        // Slots10031解决方案
-        System.out.println("原始图谱: ");
-        obj.printGraph(T01_MaxRectangle.matrix);
-        int[][] tagGraph = obj.slots10031(matrix);
-        System.out.println("结块图谱: ");
-        obj.printGraph(tagGraph);
+        // 排列方式适配
+        List<Float> floats1 = List.of(1f, 1f, 1f, 1f, 1f, 0f, 0f, 0f, 0f, 0f, 1f, 1f, 1f, 1f,1f);
+        Integer row = 3;
+        Integer col = 5;
+        List<Float> temp = new ArrayList<>();
+        for (int i = 0; i < row * col; i++) {
+            int rowByIndex = i%row;
+            int colByIndex = i/row;
+            temp.add(floats1.get((row - rowByIndex - 1) * col + colByIndex));
+        }
+        // T01_MaxRectangle obj = new T01_MaxRectangle();
+        // // System.out.println("LeetCode0,最大矩形面积:"+ obj.leetCode0(matrix));
+        //
+        // // Slots10031解决方案
+        // System.out.println("原始图谱: ");
+        // obj.printGraph(T01_MaxRectangle.matrix);
+        // int[][] tagGraph = obj.slots10031(matrix);
+        // System.out.println("结块图谱: ");
+        // obj.printGraph(tagGraph);
     }
 
     private void printGraph(int[][] original) {
