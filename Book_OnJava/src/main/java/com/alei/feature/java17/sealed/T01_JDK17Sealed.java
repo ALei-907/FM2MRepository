@@ -20,6 +20,7 @@ public class T01_JDK17Sealed {
 //  * -: final
 //  * -: sealed
 //  * -: no-sealed
+//  * -: 枚举类
 //  */
 // sealed class SealedSuperClass permits SealedSub1, SealedSub2, SealedSealedSub1 {
 //
