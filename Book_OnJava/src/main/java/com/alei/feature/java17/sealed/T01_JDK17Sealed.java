@@ -12,7 +12,7 @@ public class T01_JDK17Sealed {
 }
 
 /**
- * Jdk17 feature: 密封类sealed class,可以指定哪些子类可以继承该父类
+ * Jdk17 feature: 密封类sealed class,可以指定哪些子类可以继承该父类(接口)
  * sealed父类:
  * 1.通过sealed关键字修饰,必须通过关键字指定至少一个子类
  * sealed子类:
