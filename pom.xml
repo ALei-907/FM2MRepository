@@ -18,6 +18,7 @@
         <module>Java_QA</module>
         <module>Ops_Prometheus</module>
         <module>Tools_Java</module>
+        <module>Java_Practice</module>
     </modules>
 
     <properties>
