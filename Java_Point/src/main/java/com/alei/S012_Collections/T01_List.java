@@ -17,6 +17,7 @@ public class T01_List {
         add();
         set();
         genOrdedList();
+        indexOf();
     }
 
     public static void add(){
@@ -50,5 +51,10 @@ public class T01_List {
         List<Integer> gridIndexes = IntStream.range(0, 15).boxed().collect(Collectors.toList());
         System.out.println(gridIndexes);
 
+    }
+
+    public static void indexOf(){
+        List<Integer> integers = List.of(1, 2, 3);
+        System.out.println(integers.indexOf(4));
     }
 }
