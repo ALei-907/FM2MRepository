@@ -19,6 +19,7 @@
         <module>Ops_Prometheus</module>
         <module>Tools_Java</module>
         <module>Java_Practice</module>
+        <module>Book_MySql45Chapter</module>
     </modules>
 
     <properties>
