@@ -48,6 +48,10 @@ public class RedisClient {
         return jedisClient.eval(script, keys, args);
     }
 
+    public long hincr(String key, String attr, long delta) {
+        return jedisClient.hincrBy(key, attr, delta);
+    }
+
 
     // /**
     //  * 没有任何参数的Lua脚本
