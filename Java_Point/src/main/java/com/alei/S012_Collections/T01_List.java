@@ -1,6 +1,7 @@
 package com.alei.S012_Collections;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -18,6 +19,7 @@ public class T01_List {
         set();
         genOrdedList();
         indexOf();
+        nCopies();
     }
 
     public static void add(){
@@ -56,5 +58,9 @@ public class T01_List {
     public static void indexOf(){
         List<Integer> integers = List.of(1, 2, 3);
         System.out.println(integers.indexOf(4));
+    }
+
+    public static void nCopies(){
+        System.out.println(Collections.nCopies(5, 3));
     }
 }
