@@ -23,7 +23,7 @@ public class T03_Stream {
     public static void invokeMap() {
         // 1.筛选出User#age,所有元素组成一个List
         List<User> users = User.getUsers();
-        List<Integer> ageList = users.stream().map(e -> e.getAge()).collect(Collectors.toList());
+        List<Integer> ageList = users.stream().map(User::getAge).collect(Collectors.toList());
         System.out.println(ageList);
     }
 
