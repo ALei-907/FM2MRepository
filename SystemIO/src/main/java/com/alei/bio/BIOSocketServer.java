@@ -30,14 +30,22 @@ public class BIOSocketServer {
             Executors.defaultThreadFactory(),
             new ThreadPoolExecutor.AbortPolicy());
 
-
-    public static void main(String[] args) throws IOException {
+    /**
+     * BIO模型的局限性体现在一对四元组需要一个独立线程来执行业务逻辑,在大量IO的情况下造成了频繁切换上下文的负担
+     * 通过线程池达到了伪异步IO的效果,但仍然收到阻塞的局限
+     * 读取:
+     * 1.read()不到数据时阻塞
+     * 2.write()不能完整发送数据时阻塞
+     */
+    public static void main(String[] args) {
         try (ServerSocket socketServer = new ServerSocket(BIOConstant.PORT)) {
             System.out.println("Server Init");
             while (true) {
                 Socket socket = socketServer.accept();
                 pool.execute(new BIOServerHandler(socket, CLASS_NAME));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
