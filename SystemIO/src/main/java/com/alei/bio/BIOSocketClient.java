@@ -18,16 +18,25 @@ public class BIOSocketClient {
              InputStream in = socket.getInputStream();
              PrintWriter out = new PrintWriter(socket.getOutputStream())
         ) {
-            String scannerStr = scanner.nextLine();
-            byte[] bytes = new byte[1024];
-            while (StringUtils.isNotBlank(scannerStr)) {
-                out.write(scannerStr);
-                out.flush();
-                int read = in.read(bytes);
-                if (read != -1) {
-                    System.out.print(new String(bytes, 0, read));
+            System.out.println("[Client]: 连接成功");
+            while (socket.isConnected()) {
+                // 请求数据
+                System.out.print("Request For: ");
+                String scannerStr = scanner.nextLine();
+                if (StringUtils.isNotBlank(scannerStr)) {
+                    out.write(scannerStr);
+                    out.flush();
+                    // 等待服务器返回消息
+                    byte[] bytes = new byte[1024];
+                    int read = in.read(bytes);
+                    if (read != -1) {
+                        System.out.println("[Server Response]: " + new String(bytes, 0, read));
+                        continue;
+                    }
                 }
-                scannerStr = scanner.nextLine();
+                // 1.以read=-1为标志性事件的Socket断开连接
+                // 2.自身业务中输入空白请求为标志的退出
+                break;
             }
         } catch (Exception e) {
             e.printStackTrace();

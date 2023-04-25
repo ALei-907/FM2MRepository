@@ -1,6 +1,8 @@
 package com.alei.bio;
 
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -69,13 +71,19 @@ class BIOServerHandler implements Runnable {
         try (InputStream in = socket.getInputStream(); PrintWriter out = new PrintWriter(socket.getOutputStream())) {
             // read > 0: 获取到流中数据
             // read =-1: 流断开了
-            int read;
+            // 阻塞:      receiveBuffer如果无数据可读就陷入阻塞
             byte[] bytes = new byte[1024];
+            int read;
             while ((read = in.read(bytes)) != -1) {
-                System.out.println(brokerName + "收到消息: " + new String(bytes, 0, read));
-                out.write(brokerName + " Receive");
+                String receiveMsg = new String(bytes, 0, read);
+                if (StringUtils.equalsIgnoreCase(receiveMsg, "TimeNow")) {
+                    out.write("TimeNow: " + System.currentTimeMillis());
+                } else {
+                    out.write("Don't Match Request: " + receiveMsg);
+                }
                 out.flush();
             }
+            System.out.println("Client Exit!");
         } catch (Exception e) {
             e.printStackTrace();
         }
