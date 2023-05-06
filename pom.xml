@@ -9,17 +9,12 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>Java_Point</module>
-        <module>Java_Utils</module>
-        <module>Java_JUC</module>
-        <module>Book_HFDesignPatterns</module>
-        <module>Book_OnJava</module>
-        <module>Book_JVM3</module>
-        <module>Java_QA</module>
-        <module>Ops_Prometheus</module>
-        <module>Tools_Java</module>
-        <module>Java_Practice</module>
-        <module>Book_MySql45Chapter</module>
+        <module>DemoPractice</module>
+        <module>JavaJUC</module>
+        <module>JavaPoint</module>
+        <module>JavaTools</module>
+        <module>JavaUtils</module>
+        <module>JavaVerify</module>
         <module>SystemIO</module>
     </modules>
 
