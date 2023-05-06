@@ -8,7 +8,7 @@ public class ArrQueue {
     /**
      * 队列
      */
-    private int arr[];
+    private final int[] arr;
 
     /**
      * 队列容量

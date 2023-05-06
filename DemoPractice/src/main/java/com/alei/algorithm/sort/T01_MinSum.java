@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
  * @date: 2022/12/20
  */
 public class T01_MinSum {
-    private int sum;
 
     /**
      * 计算最小和
@@ -22,7 +21,7 @@ public class T01_MinSum {
         System.out.println(processor);
     }
 
-    public int processor(int arr[], int L, int R) {
+    public int processor(int[] arr, int L, int R) {
         if (L == R) {
             return 0;
         }
@@ -31,8 +30,8 @@ public class T01_MinSum {
         return processor(arr, L, mid) + processor(arr, mid + 1, R) + merge(arr, L, mid, R);
     }
 
-    public int merge(int arr[], int L, int mid, int R) {
-        int help[] = new int[R - L + 1];
+    public int merge(int[] arr, int L, int mid, int R) {
+        int[] help = new int[R - L + 1];
         int p1 = L;
         int p2 = mid + 1;
         int i = 0;
@@ -52,9 +51,7 @@ public class T01_MinSum {
         while (p2 <= R) {
             help[i++] = arr[p2++];
         }
-        for (int i1 = 0; i1 < help.length; i1++) {
-            arr[L + i1] = help[i1];
-        }
+        System.arraycopy(help, 0, arr, L, help.length);
         return res;
     }
 

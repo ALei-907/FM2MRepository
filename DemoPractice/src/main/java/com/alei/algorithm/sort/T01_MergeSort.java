@@ -1,7 +1,6 @@
 package com.alei.algorithm.sort;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.stream.Collectors;
 
 /**
@@ -17,7 +16,7 @@ public class T01_MergeSort {
         System.out.println(collect);
     }
 
-    public void processor(int arr[], int L, int R) {
+    public void processor(int[] arr, int L, int R) {
         if (L == R) {
             return;
         }
@@ -31,8 +30,8 @@ public class T01_MergeSort {
         merge(arr, L, mid, R);
     }
 
-    public void merge(int arr[], int L, int mid, int R) {
-        int help[] = new int[R - L + 1];
+    public void merge(int[] arr, int L, int mid, int R) {
+        int[] help = new int[R - L + 1];
         int p1 = L;
         int p2 = mid + 1;
         int i = 0;
@@ -45,9 +44,7 @@ public class T01_MergeSort {
         while (p2 <= R) {
             help[i++] = arr[p2++];
         }
-        for (int i1 = 0; i1 < help.length; i1++) {
-            arr[L + i1] = help[i1];
-        }
+        System.arraycopy(help, 0, arr, L, help.length);
     }
 
 

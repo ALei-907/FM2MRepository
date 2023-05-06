@@ -3,7 +3,6 @@ package com.alei.algorithm.sort;
 import com.alei.util.Utils;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 /**
  * @author LeiLiMin
@@ -89,9 +88,7 @@ public class T01_BiggerThan2Right {
         while (p2 <= R) {
             help[i++] = arr[p2++];
         }
-        for (int i1 = 0; i1 < help.length; i1++) {
-            arr[L + i1] = help[i1];
-        }
+        System.arraycopy(help, 0, arr, L, help.length);
         return ans;
     }
 
